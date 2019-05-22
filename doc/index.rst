@@ -3,16 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Pygame Zero
-======================
+Pygame Zero へようこそ
+=====================
 
-Pygame Zero is for creating games without boilerplate.
+Pygame Zero はお決まりの手続きをあれこれ書かなくても、ゲームを作れるようにしたものです。
 
-It is intended for use in education, so that teachers can teach basic
-programming without needing to explain the Pygame API or write an event loop.
+教育の場での利用を意図して作られており、先生がPygame API やイベントループの説明をしなくても、基本的なプログラミングを教えられるようになっています。
 
-
-Courses
+授業内容
 -------
 
 .. toctree::
@@ -25,8 +23,8 @@ Courses
 .. learn-programming
 .. flappy-bird
 
-Reference
----------
+リファレンス
+-----------
 
 .. toctree::
     :maxdepth: 3
@@ -34,8 +32,8 @@ Reference
     hooks
     builtins
 
-User Guide
-----------
+ユーザーガイド
+-------------
 
 .. toctree::
     :maxdepth: 2
@@ -66,7 +64,7 @@ for learners.
     stickers
 
 
-Improving Pygame Zero
+Pygame Zero を改善する
 ---------------------
 
 .. toctree::
