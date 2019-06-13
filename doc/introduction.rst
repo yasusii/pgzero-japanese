@@ -1,33 +1,29 @@
-Introduction to Pygame Zero
-===========================
+Pygame Zero 入門
+===============
 
 .. highlight:: python
     :linenothreshold: 5
 
-Creating a window
------------------
+ウィンドウを作る
+---------------
 
-First, create an empty file called ``intro.py``.
+まず ``intro.py`` という名前の中身がからっぽのファイルを作ります。
 
-Verify that this runs and creates a blank window by running ::
+つぎのようにすると、これが動いてウィンドウだけが表示されることを確認しましょう ::
 
     pgzrun intro.py
 
-Everything in Pygame Zero is optional; a blank file is a valid Pygame Zero
-script!
-
-You can quit the game by clicking on the window's close button or by pressing
-``Ctrl-Q`` (``⌘-Q`` on Mac). If the game stops responding for any reason, you
-may need to terminate it by pressing ``Ctrl-C`` in your Terminal window.
+Pygame Zero はプログラムを何も書かなくても動くようになっています。からっぽのファイルも Pygame Zero の世界ではれっきとしたプログラムです!
 
 
-Drawing a background
---------------------
+ウィンドウの閉じるボタンを押す、または``Ctrl-Q`` (Macなら ``⌘-Q``)でゲームが終了します。何か問題があってゲームが応答しなくなっているときは、ターミナルウィンドウで ``Ctrl-C`` を押すと終了します。
 
-Next, let's add a :func:`draw` function and set window dimensions. Pygame Zero
-will call this function whenever it needs to paint the screen.
+背景の描画
+----------
 
-In ``intro.py``, add the following::
+次は :func:`draw` という関数を作成し、ウィンドウのサイズも指定してみましょう。Pygame Zero は画面の描画が必要になときは常にこの関数を呼び出すようになっています。
+
+ファイル ``intro.py`` に以下の内容を記述します。 ::
 
     WIDTH = 300
     HEIGHT = 300
@@ -35,48 +31,40 @@ In ``intro.py``, add the following::
     def draw():
         screen.fill((128, 0, 0))
 
-Re-run ``pgzrun intro.py`` and the screen should now be a reddish square!
+もう一度 ``pgzrun intro.py`` を実行してみると、今度は赤っぽい正方形が表示されます!
 
-What is this code doing?
+このコードは何をやっているのでしょう？
 
-``WIDTH`` and ``HEIGHT`` control the width and height of your window. The code
-sets the window size to be 300 pixels in each dimension.
+``WIDTH`` と ``HEIGHT`` はそれぞれウィンドウの高さと幅を指定するものです。このコードではウィンドウサイズを縦横それぞれに300ピクセルをセットしています。
 
-``screen`` is a built-in that represents the window display. It has a
-:ref:`range of methods for drawing sprites and shapes <screen>`. The
-``screen.fill()`` method call is filling the screen with a solid colour,
-specified as a ``(red, green, blue)`` colour tuple. ``(128, 0, 0)`` will be a
-medium-dark red. Try changing these values with numbers between 0 and 255
-and see what colors you can create.
+``screen`` は組込みのオブジェクトで、ウィンドウのスクリーンを表しており、
+:ref:`スプライトやシェイプを描画するさまざまなメソッドを備えています <screen>` 。
 
-Let's set up a sprite that we can animate.
+``screen.fill()`` メソッドは ``(red, green, blue)`` 形式のタプルで色を指定して呼び出すことにより、スクリーンをその色で塗りつぶします。たとえは ``(128, 0, 0)`` を指定するとやや暗めの赤になります。数値を0から255の間で変えてみて、どのような色になるか確認してみましょう。
+
+次はアニメーションを実現するスプライトを設定します。
 
 
-Draw a sprite
--------------
+スプライトの描画
+---------------
 
-Before we can draw anything, we'll need to save an alien sprite to use. You can
-right click on this one and save it ("Save Image As..." or similar).
+表示処理を書く前にまず、エイリアンのスプライトを使用できるようディスクに保存しておきましょう。右クリックで保存してください(「名前を付けて画像を保存」などを選択します)。
 
 .. image:: _static/alien.png
 
-(This sprite has a transparency (or "alpha") channel, which is great for games!
-But it's designed for a dark background, so you may not be able to see the
-alien's space helmet until it is shown in the game).
+(このスプライトは、ゲームに必要な画像透明表示を行うアルファ・チャンネルを備えています。ただし暗い背景で使うことを前提にしたものなので、エイリアンの宇宙服のヘルメット部分は、実際にゲーム内で表示するまでよく見えないかもしれません。
 
 .. tip::
 
-    You can find lots of free sprites, including this one, on `kenney.nl
-    <https://kenney.nl/assets?q=2d>`_. This one comes from the
+    このエイリアンをはじめ、たくさんの無料スプライトが
+    `kenney.nl
+    <https://kenney.nl/assets?q=2d>`_ で入手できます。 エイリアンは
     `Platformer Art Deluxe pack
-    <https://kenney.nl/assets/platformer-art-deluxe>`_.
+    <https://kenney.nl/assets/platformer-art-deluxe>`_ に収録されています。
 
-You need to save the file in the right place so that Pygame Zero can find it.
-Create a directory called ``images`` and save the image into it as
-``alien.png``. Both of those must be lower case. Pygame Zero will complain
-otherwise, to alert you to a potential cross-platform compatibility pitfall.
+保存したファイルは Pygame Zero から見付けやすい場所に置きましょう。 ``images`` という名前のディレクトリを作成し、その中に ``alien.png`` を保存します。ディレクトリ名とファイル名はどちらも小文字を使ってください。そうしないと、Pygame Zeroはクロスプラットフォームの互換性に穴ができてしまうという警告を発します。
 
-If you've done that, your project should look like this:
+ファイルの保存を終えた段階で、プロジェクトのファイル配置は次のようになっているはずです。
 
 .. code-block:: none
 
@@ -85,13 +73,11 @@ If you've done that, your project should look like this:
     │   └── alien.png
     └── intro.py
 
-``images/`` is the standard directory that Pygame Zero will look in to find
-your images.
+Pygame Zero ``images/`` ディレクトリから画像を探し出します。
 
-There's a built-in class called :class:`Actor` that you can use to represent a
-graphic to be drawn to the screen.
+:class:`Actor` という組込みのクラスがあります。これを使うとスクリーンへ画像を表示することができます。
 
-Let's define one now. Change the ``intro.py`` file to read::
+では試してみましょう。 ``intro.py`` を次のように変更してください。 ::
 
     alien = Actor('alien')
     alien.pos = 100, 56
@@ -103,85 +89,73 @@ Let's define one now. Change the ``intro.py`` file to read::
         screen.clear()
         alien.draw()
 
-Your alien should now be appearing on screen! By passing the string ``'alien'``
-to the ``Actor`` class, it automatically loads the sprite, and has attributes
-like positioning and dimensions. This allows us to set the ``HEIGHT`` of
-the window based on the height of the alien.
+エイリアンがスクリーンに表示されました! ``Actor`` クラスに ``'alien'`` という文字列を指定すると、自動的にスプライトを読み込み、位置やサイズなどの属性がセットされます。 ここではこの属性を利用してエイリアンの高さを元に ``HEIGHT`` の値を設定しています。
 
-The ``alien.draw()`` method draws the sprite to the screen at its current
-position.
+``alien.draw()`` メソッドはスクリーン上の現在の位置にスプライトを描画します。
 
+エイリアンを動かす
+-----------------
 
-Moving the alien
-----------------
-
-Let's set the alien off-screen; change the ``alien.pos`` line to read::
+エイリアンをいったんスクリーンの外に出します。 ``alien.pos`` の行を次のように変更してください。 ::
 
     alien.topright = 0, 10
 
-Note how you can assign to ``topright`` to move the alien actor by its
-top-right corner. If the right-hand edge of the alien is at ``0``, the
-alien is just offscreen to the left.  Now let's make it move. Add the following
-code to the bottom of the file::
+``topright`` に値をセットすることでエイリアンの右上の座標で位置を指定 することがで
+きます。もしエイリアン右上のx座標が  ``0`` だったらエイリアンはスクリーンの外になり表示されません。続いてこれを動かしてみましょう。ファイルの末尾に次のコードを追加してください。 ::
 
     def update():
         alien.left += 2
         if alien.left > WIDTH:
             alien.right = 0
 
-Pygame Zero will call your :func:`update` function once every frame. Moving the
-alien a small number of pixels every frame will cause it to slide across the
-screen. Once it slides off the right-hand side of the screen, we reset it back
-to the left.
+Pygame Zeroはフレーム描画のたびに、関数  :func:`update` を呼び出します。フレームごとに表示位置を数ピクセルずつ変えることで、アイリアンがスクリーンをすーっと横切っていくように見えます。エイリアンが右端に消えたところで座標をリセットし、ふたたび左端から現れるようにしています。
 
-Your functions ``draw()`` and ``update()`` work in similar ways but are
-designed for two different purposes.  The ``draw()`` function draws the current
-position of the alien while the ``update()`` function is used to show the alien
-moving on the screen.
+``draw()`` と ``update()`` は似ていますが使う目的が違います。
+``draw()`` がエイリアンの最初の位置を描画するのに対し、
+``update()`` はスクリーン上でエイリアンを動かして見せるために使います。
 
+マウスのクリックを検知
+---------------------
 
-Handling clicks
----------------
-
-Let's make the game do something when you click on the alien. To do this we
-need to define a function called :func:`on_mouse_down`. Add this to the source
-code::
+今度はマウスでエイリアンをクリックしたとき何かおきるようにしてみましょう。
+これの機能を実現する関数は :func:`on_mouse_down` です。これをソースド
+コードに追加します。 ::
 
     def on_mouse_down(pos):
         if alien.collidepoint(pos):
-            print("Eek!")
+            print("うひゃあ!")
         else:
-            print("You missed me!")
+            print("ざんねんでした!")
 
-You should run the game and try clicking on and off the alien.
+ゲームを起動して、エイリアンやエイリアンがいないところをクリックしてみてください。
 
-Pygame Zero is smart about how it calls your functions. If you don't define
-your function to take a ``pos`` parameter, Pygame Zero will call it without
-a position. There's also a ``button`` parameter for ``on_mouse_down``. So we
-could have written::
+Pygame Zeroは関数の呼び出し方を自動的に判別するようになっています。関
+数を ``pos`` パラメータ無しで定義すると、Pygame Zeroはパラメータを使わ
+ずに関数を呼び出します。  ``on_mouse_down`` には同じように省略可能なパ
+ラメータ  ``button`` があります。たとえばパラメータを使わずに次のように書けます。 ::
 
     def on_mouse_down():
-        print("You clicked!")
+        print("クリックされたよ!")
 
-or::
+パラメータを使う場合の例はこうなります。 ::
 
     def on_mouse_down(pos, button):
         if button == mouse.LEFT and alien.collidepoint(pos):
-            print("Eek!")
+            print("うひゃあ!")
 
 
 
-Sounds and images
+サウンドとイメージ
 -----------------
 
-Now let's make the alien appear hurt. Save these files:
+それでは次にエイリアンが倒れるようにしてみましょう。次のファイルを保存してください。
 
-* `alien_hurt.png <_static/alien_hurt.png>`_ - save this as ``alien_hurt.png``
-  in the ``images`` directory.
-* `eep.wav <_static/eep.wav>`_ - create a directory called ``sounds`` and save
-  this as ``eep.wav`` in that directory.
+* `alien_hurt.png <_static/alien_hurt.png>`_ - ``alien_hurt.png``
+  という名前で ``images`` ディレクトリに保存してください。
+* `eep.wav <_static/eep.wav>`_ - ``sounds`` という名前のディレクトリを新たに作り、
+  ``eep.wav`` という名前で保存してください。
 
-Your project should now look like this:
+プロジェクトのファイル構成は次のようになります。
 
 .. code-block:: none
 
@@ -193,29 +167,24 @@ Your project should now look like this:
     │   └── eep.wav
     └── intro.py
 
-``sounds/`` is the standard directory that Pygame Zero will look in to find
-your sound files.
+``sounds/`` はPygame Zero がサウンド・ファイルを探し出す標準のディレクトリです。
 
-Now let's change the ``on_mouse_down`` function to use these new resources::
+``on_mouse_down`` を変更してこれら新しく追加したファイルを使うようにしましょう。 ::
 
     def on_mouse_down(pos):
         if alien.collidepoint(pos):
             alien.image = 'alien_hurt'
             sounds.eep.play()
 
-Now when you click on the alien, you should hear a sound, and the sprite will
-change to an unhappy alien.
+これでエイリアンをクリックすると、音が鳴ってスプライトが倒れた姿のエイリアンに変わります。
 
-There's a bug in this game though; the alien doesn't ever change back to a
-happy alien (but the sound will play on each click). Let's fix this next.
+ただしこのプログラムにはバグがあります。一度クリックすると、エイリアンは元の姿に戻りません(にもかかわらずクリックのたびに音はします)。この部分を修正しましょう。
 
+クロック
+--------
 
-Clock
------
-
-If you're familiar with Python outside of games programming, you might know the
-``time.sleep()`` method that inserts a delay. You might be tempted to write
-code like this::
+あなたがゲームプログラミング以外でPythonを使ったことがあるなら、一定時間処理を止めるのに
+``time.sleep()`` を使うことを知っていて、次のようなコードを書こうとするかもしれません。 ::
 
     def on_mouse_down(pos):
         if alien.collidepoint(pos):
@@ -224,17 +193,16 @@ code like this::
             time.sleep(1)
             alien.image = 'alien'
 
-Unfortunately, this is not at all suitable for use in a game. ``time.sleep()``
-blocks all activity; we want the game to go on running and animating. In fact
-we need to return from ``on_mouse_down``, and let the game work out when to
-reset the alien as part of its normal processing, all the while running your
-``draw()`` and ``update()`` methods.
+残念ながらこのようなコードはゲーム向きではありません。
+``time.sleep()`` はすべてのプログラム内の処理をすべれ止めてしてしまうためです。
+ここで必要なのはゲーム自体はそのまま進行し、アニメーションは動き続けることです。
+つまり ``on_mouse_down`` は処理を止めずにリターンして、通常処理の
+``draw()`` と ``update()`` を実行しながら、必要なときにだけエイリアンのリセット処理を行うようにしたいのです。
 
-This is not difficult with Pygame Zero, because it has a built-in
-:class:`Clock` that can schedule functions to be called later.
+Pygame Zero でこのような処理は難しくありません。組込みの :class:`Clock`
+を使えば時間をおいて後から実行する関数をスケジュールできるからです。
 
-First, let's "refactor" (ie. re-organise the code). We can create functions to
-set the alien as hurt and also to change it back to normal::
+ではリファクタリング(プログラムコードの構成し直し)してみましょう。エイリアンを倒れた姿にする関数と、それを元の状態に戻す関数を作成します。 ::
 
     def on_mouse_down(pos):
         if alien.collidepoint(pos):
@@ -249,36 +217,30 @@ set the alien as hurt and also to change it back to normal::
     def set_alien_normal():
         alien.image = 'alien'
 
-This is not going to do anything different yet. ``set_alien_normal()`` won't be
-called. But let's change ``set_alien_hurt()`` to use the clock, so that the
-``set_alien_normal()`` will be called a little while after. ::
+このままだと前のコードと実行結果は変わりありません。
+``set_alien_normal()`` が呼び出されていないからです。
+``set_alien_hurt()`` で clock を使い、少し時間がたってから
+``set_alien_normal()`` を呼び出すように修正してみましょう。 ::
 
     def set_alien_hurt():
         alien.image = 'alien_hurt'
         sounds.eep.play()
         clock.schedule_unique(set_alien_normal, 0.5)
 
-``clock.schedule_unique()`` will cause ``set_alien_normal()`` to be called
-after ``0.5`` second. ``schedule_unique()`` also prevents the same function
-being scheduled more than once, such as if you click very rapidly.
+上記は ``clock.schedule_unique()`` で ``set_alien_normal()`` を
+ ``0.5`` 秒後に呼び出すようにしています。また、す早いクリックを連続しておこなった場合でも ``schedule_unique()`` は同じ関数を同時にひとつしかスケジュールできないようになっています。
 
-Try it, and you'll see the alien revert to normal after 0.5 second. Try clicking
-rapidly and verify that the alien doesn't revert until 0.5 second after the last
-click.
+プログラムを動かして試してみると、エイリアンをクリックして倒しても、0.5秒後には元に戻るようになっているはずです。す早く何度もクリックするのも試してみてください。一番最後のクリックから0.5秒後にエイリアンは元に戻るはずです。
 
-``clock.schedule_unique()`` accepts both integers and float numbers for the time interval. in the tutorial we are using
-a float number to show this but feel free to use both to see the difference and effects the different values have.
+``clock.schedule_unique()`` で指定する実行までの秒数は整数、小数のどちらでも指定できます。この例では小数を使っていますが、整数、小数いろいろ変えてみてどのように変わってくるか試してみてください。
 
 
-Summary
--------
+まとめ
+-----
 
-We've seen how to load and draw sprites, play sounds, handle input events, and
-use the built-in clock.
+ここまでで、スプライトを読み込んで表示、音の再生、マウスの入力イベント処理、組込みの clock の使い方を学びました。
 
-You might like to expand the game to keep score, or make the alien move more
-erratically.
+ゲームをさらに拡張してスコアを表示したり、エイリアンがもっと不規則な動き方をするようにしたいかもしれませんね。
 
-There are lots more features built in to make Pygame Zero easy to use. Check
-out the :doc:`built in objects <builtins>` to learn how to use the rest of the
-API.
+Pygame Zero にはかんたんに使える組込みの機能がまだたくさんあります。
+:doc:`built in objects <builtins>` を読んで、そのほかのAPIの使い方を学んでください。
