@@ -1,48 +1,39 @@
-Event Hooks
-===========
+イベントの捕捉
+============
 
-Pygame Zero will automatically pick up and call event hooks that you define.
-This approach saves you from having to implement the event loop machinery
-yourself.
+イベントの捕捉処理を定義しておくと、Pygame Zeroは自動的に対応するものを呼び出してくれるようになっています。この仕組みにより、イベント・ループの仕組みをわざわざ自分で書かなくてもいいようになっています。
 
-Game Loop Hooks
----------------
+ゲーム・ループのフック
+-------------------
 
-A typical game loop looks a bit like this::
+ゲームのプログラムでは通常次のようなゲーム・ループを書く必要があります ::
 
     while game_has_not_ended():
         process_input()
         update()
         draw()
 
-Input processing is a bit more complicated, but Pygame Zero allows you to
-easily define the ``update()`` and ``draw()`` functions within your game
-module.
+入力処理は複雑ですが、Pygame Zeroを使うと ``update()`` と ``draw()`` という関数を定義するだけでゲームが書けます。
 
 .. function:: draw()
 
-    Called by Pygame Zero when it needs to redraw your game window.
+    ゲームのスクリーンを再描画する必要があるとき、Pygame Zeroはこの関数を呼び出します。
 
-    ``draw()`` must take no arguments.
+    ``draw()`` に引数はありません。
 
-    Pygame Zero attempts to work out when the game screen needs to be redrawn
-    to avoid redrawing if nothing has changed. On each step of the game loop
-    it will draw the screen in the following situations:
+    Pygame Zeroは再描画の際、必要の無い部分の再描画をスキップするようになっています。ゲーム・ループでの繰り返しで、次の条件が該当する場合にスクリーンの再描画が行われます。
 
-    * If you have defined an ``update()`` function (see below).
-    * If a clock event fires.
-    * If an input event has been triggered.
+    * 関数 ``update()`` が定義されているとき(後で説明します)。
+    * クロック・イベントが発生したとき。
+    * 入力イベントが発生したとき。
 
-    One way this can catch you out is if you attempt to modify or animate
-    something within the draw function. For example, this code is wrong: the
-    alien is not guaranteed to continue moving across the screen::
+    ここで注意してほしいのは、draw関数で表示内容を変更したり動かしたりするときの書き方です。たとえば次のコードは間違っています。エイリアンをスクリーンを横に移動させたいのですが、意図したようには動きません。
 
         def draw():
             alien.left += 1
             alien.draw()
 
-    The correct code uses ``update()`` to modify or animate things and draw
-    simply to paint the screen::
+    以下が正しいコードです。表示内容を変えたり動かしたり、あるいは単にスクリーンに色を塗りたいときは、 ``update()`` を使います ::
 
         def draw():
             alien.draw()
@@ -50,138 +41,104 @@ module.
         def update():
             alien.left += 1
 
-.. function:: update() or update(dt)
+.. function:: update() または update(dt)
 
-    Called by Pygame Zero to step your game logic. This will be called
-    repeatedly, 60 times a second.
+    Pygame Zeroはゲームを進める関数としてこれを呼び出します。この関数は1秒間に60回、くり返し呼び出されます。
 
-    There are two different approaches to writing an update function.
+    update関数はアプローチの異なる二通りの書き方があります。
 
-    In simple games you can assume a small time step (a fraction of a second)
-    has elapsed between each call to ``update()``. Perhaps you don't even care
-    how big that time step is: you can just move objects by a fixed number of
-    pixels per frame (or accelerate them by a fixed constant, etc.)
+    簡単なゲームの場合、 ``update()`` 呼び出しから次の呼び出しまでの1ステップに必要な時間はわずか、ほんの一瞬とみなせます。おそらくその時間がどれくらいか気にすることもないでしょう。この場合1フレームで行う処理は、オブジェクトを固定のピクセル数だけ動かしたり、あるいは固定の割合で加速させたり、などです。
 
-    A more advanced approach is to base your movement and physics calculations
-    on the actual amount of time that has elapsed between calls. This can give
-    smoother animation, but the calculations involved can be harder and you
-    must take more care to avoid unpredictable behaviour when the time steps
-    grow larger.
+    より高度なアプローチは、呼び出しから呼び出しの間にかかった時間をベースに運動と物理の計算を行うことです。この方法を使うとアニメーションを滑らかに表示できる一方で、計算量が大きくなる可能性があり、また時間が長くなったときに予想外の振舞いをしないよう注意しなければなりません。
 
-    To use a time-based approach, you can change the update function to take a
-    single parameter. If your update function takes an argument, Pygame Zero
-    will pass it the elapsed time in seconds. You can use this to scale your
-    movement calculations.
+    時間ベースのアプローチを使用する場合は、updateが一つの引数を受け取るようにします。関数updateに引数が設定されている場合、Pygame Zeroは秒単位の経過時間を引数として渡します。この結果、その時間に応じて動きの計算をすることが可能になります。
 
 
-Event Handling Hooks
---------------------
+イベント処理フック
+----------------
 
-Similar to the game loop hooks, your Pygame Zero program can respond to input
-events by defining functions with specific names.
+ゲームループのフックと同様に、Pygame Zeroプログラムでは特定の名前で関数を定義することにより、入力イベントを処理することができます。
 
-Somewhat like in the case of ``update()``, Pygame Zero will inspect your
-event handler functions to determine how to call them. So you don't need to
-make your handler functions take arguments. For example, Pygame Zero will
-be happy to call any of these variations of an ``on_mouse_down`` function::
+``update()`` と同じように、Pygame Zeroはイベントハンドラ関数を調べてその呼び出し方法を判別します。ですからイベントハンドラ関数の引数は必須ではありません。たとえばPygame Zeroは以下の ``on_mouse_down`` 関数のバリエーションの内、何れを使ってもちゃんと呼び出してくれます。
 
     def on_mouse_down():
-        print("Mouse button clicked")
+        print("マウスのボタンがクリックされました")
 
     def on_mouse_down(pos):
-        print("Mouse button clicked at", pos)
+        print("マウスのボタンが", pos, "の位置でクリックされました")
 
     def on_mouse_down(button):
-        print("Mouse button", button, "clicked")
+        print("マウスの", button, "ボタンがクリックされました")
 
     def on_mouse_down(pos, button):
-        print("Mouse button", button, "clicked at", pos)
+        print("マウスの", button, "ボタンが", pos, "の位置でクリックされました")
 
-It does this by looking at the names of the parameters, so they must be spelled
-exactly as above. Each event hook has a different set of parameters that you
-can use, as described below.
+判別は引数の名前によって行なわれます。ですから引数を使う場合、名前は正確に入力する必要があります。各イベント・フックで使用できる引数の内訳を以下に記載します。
 
 .. function:: on_mouse_down([pos], [button])
 
-    Called when a mouse button is depressed.
+    マウスボタンが押されたときに呼び出されます。
 
-    :param pos: A tuple (x, y) that gives the location of the mouse pointer
-                when the button was pressed.
-    :param button: A :class:`mouse` enum value indicating the button that was
-                   pressed.
+    :param pos: (x, y)形式のタプルで、ボタンが押されたときのマウス・ポインタの位置を示します。
+    :param button: 列挙型 :class:`mouse` の値で押されたボタンがどれかを示します。
 
 .. function:: on_mouse_up([pos], [button])
 
-    Called when a mouse button is released.
+    マウスボタンが離されたときに呼び出されます。
 
-    :param pos: A tuple (x, y) that gives the location of the mouse pointer
-                when the button was released.
-    :param button: A :class:`mouse` enum value indicating the button that was
-                   released.
+    :param pos: (x, y)形式のタプルで、ボタンが離されたときのマウス・ポインタの位置を示します。
+    :param button: 列挙型 :class:`mouse` の値で離されたボタンがどれかを示します。
 
 .. function:: on_mouse_move([pos], [rel], [buttons])
 
-    Called when the mouse is moved.
+    マウスが動かされたときに呼び出されます。
 
-    :param pos: A tuple (x, y) that gives the location that the mouse pointer
-                moved to.
-    :param rel: A tuple (delta_x, delta_y) that represent the change in the
-                mouse pointer's position.
-    :param buttons: A set of :class:`mouse` enum values indicating the buttons
-                    that were depressed during the move.
+    :param pos: (x, y)形式のタプルで、動かした先のマウス・ポインタの位置を示します。
+    :param rel: (delta_x, delta_y)形式のタプルで、マウス・ポインタの位置の変化量を示します。
+    :param buttons: 列挙型 :class:`mouse` の値の集合です。移動の間押されていたボタン(複数)を示します。
 
-
-To handle mouse drags, use code such as the following::
+マウスのドラッグを処理したいときは、次のコードを参考にしてください ::
 
     def on_mouse_move(rel, buttons):
         if mouse.LEFT in buttons:
-            # the mouse was dragged, do something with `rel`
+            # マウスがドラッグされた。`rel` を使って続く処理を行う
             ...
-
 
 .. function:: on_key_down([key], [mod], [unicode])
 
-    Called when a key is depressed.
+    キーが押されたときに呼び出されます。
 
-    :param key: An integer indicating the key that was pressed (see
-                :ref:`below <buttons-and-keys>`).
-    :param unicode: Where relevant, the character that was typed. Not all keys
-                    will result in printable characters - many may be control
-                    characters. In the event that a key doesn't correspond to
-                    a Unicode character, this will be the empty string.
-    :param mod: A bitmask of modifier keys that were depressed.
+    :param key: 整数で、押されたキーを示します(:ref:`below <buttons-and-keys>` 参照)。
+    :param unicode: キーで入力された文字。ただし制御文字のように表示できない文字の場合もあります。キーに対応しているユニコードが無い場合は空文字列となります。
+    :param mod: 押された修飾キーのビットマスク。
 
 .. function:: on_key_up([key], [mod])
 
-    Called when a key is released.
+    キーが離されたときに呼び出されます。
 
-    :param key: An integer indicating the key that was released (see
-                :ref:`below <buttons-and-keys>`).
-    :param mod: A bitmask of modifier keys that were depressed.
+    :param key: 整数で、離されたキーを示します(:ref:`below <buttons-and-keys>` 参照)。
+    :param mod: 押された修飾キーのビットマスク。
 
 
 .. function:: on_music_end()
 
-    Called when a :ref:`music track <music>` finishes.
+    :ref:`music track <music>` が完了したときに呼び出されます。
 
-    Note that this will not be called if the track is configured to loop.
+    ただしトラックにループ設定がされている場合、この関数が呼び出されることはないので注意が必要です。
 
 
 .. _buttons-and-keys:
 
-Buttons and Keys
-''''''''''''''''
+マウスのボタンとキー
+''''''''''''''''''
 
-Built-in objects ``mouse`` and ``keys`` can be used to determine which buttons
-or keys were pressed in the above events.
+組込みのオブジェクト ``mouse`` と ``keys`` は上記のイベントでどのボタンやキーが押されたのかを示すために使われます。
 
-Note that mouse scrollwheel events appear as button presses with the below
-``WHEEL_UP``/``WHEEL_DOWN`` button constants.
+マウスのスクロールホイールのイベントは次に記載しているボタン定数 ``WHEEL_UP`` または ``WHEEL_DOWN`` のボタン押下として扱われます。
 
 .. class:: mouse
 
-    A built-in enumeration of buttons that can be received by the
-    ``on_mouse_*`` handlers.
+    マウスのボタンを示す組込みの列挙型オブジェクトで、 ``on_mouse_*`` ハンドラに渡されます。
 
     .. attribute:: LEFT
     .. attribute:: MIDDLE
@@ -191,8 +148,7 @@ Note that mouse scrollwheel events appear as button presses with the below
 
 .. class:: keys
 
-    A built-in enumeration of keys that can be received by the ``on_key_*``
-    handlers.
+    キーを示す組込みの列挙型オブジェクトで、 ``on_key_*`` ハンドラに渡されます。
 
     .. attribute:: BACKSPACE
     .. attribute:: TAB
@@ -329,12 +285,11 @@ Note that mouse scrollwheel events appear as button presses with the below
     .. attribute:: EURO
     .. attribute:: LAST
 
-Additionally you can access a set of constants that represent modifier keys:
+そのほかにも修飾キーを表す定数があります。
 
 .. class:: keymods
 
-    Constants representing modifier keys that may have been depressed during
-    an ``on_key_up``/``on_key_down`` event.
+    ``on_key_up`` または ``on_key_down`` イベント発生のとき押されていた修飾キーを示す定数です。
 
     .. attribute:: LSHIFT
     .. attribute:: RSHIFT
