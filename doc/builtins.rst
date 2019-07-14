@@ -1,30 +1,27 @@
-Built-in Objects
+組込みオブジェクト
 ================
 
-Pygame Zero provides useful built-in objects to help you make games easily.
-
+Pygame Zeroには、ゲーム制作を簡単にしてくれる便利な組込みオブジェクトが用意されています。
 
 .. _screen:
 
-Screen
-------
+スクリーン
+---------
 
 .. toctree::
     :hidden:
 
     ptext
 
-The ``screen`` object represents your game screen.
+``screen`` オブジェクトはゲーム・スクリーンを表します。
 
-It is a thin wrapper around a Pygame surface that allows you to easily
-draw images to the screen ("blit" them).
+これはPygame surfaceの薄いラッパーで、スクリーンに描画したり、画像データを表示することを容易にしてくれます。
 
 .. class:: Screen
 
     .. attribute:: surface
 
-        The raw `Pygame surface`_ that represents the screen buffer. You can
-        use this for advanced graphics operations.
+        スクリーン・バッファを表す素の `Pygame surface`_ そのものです。高度なグラフィック操作をしたいときに使用します。
 
         .. _`Pygame surface`: https://www.pygame.org/docs/ref/surface.html
 
@@ -32,75 +29,71 @@ draw images to the screen ("blit" them).
 
         .. versionadded:: 1.3
 
-        Return a ZRect representing the bounds of the screen.
+        スクリーンの領域を表す ZReact を返します。
 
     .. method:: clear()
 
-        Reset the screen to black.
+        スクリーンを黒にリセットします。
 
     .. method:: fill((red, green, blue), [gcolor=(r, g, b)])
 
-        Fill the screen with a solid color.
+        スクリーンを単色で塗り潰します。
 
         .. versionadded:: 1.3
 
-            If ``gcolor`` is given then fill with a gradient, from ``color`` at
-            the top of the screen to ``gcolor`` at the bottom.
+            ``gcolor`` を指定するとグラデーションを使って塗り潰します。その場合、スクリーンの上端が ``color`` 、下端が ``gcolor`` となります。
 
     .. method:: blit(image, (left, top))
 
+        指定の位置に画像を描画します。
         Draw the image to the screen at the given position.
 
-        ``blit()`` accepts either a Surface or a string as its ``image``
-        parameter. If ``image`` is a ``str`` then the named image will be
-        loaded from the ``images/`` directory.
+        ``blit()`` の引数 ``image`` には Surface オブジェクトと文字列、どちらも指定できます。もし ``image`` が文字列だった場合は、 ``images/`` ディレクトリからその名前の画像を探してロードします。
 
     .. method:: draw.line(start, end, (r, g, b))
 
-        Draw a line from start to end.
+        start の座標から end の座標まで直線を描画します。
 
     .. method:: draw.circle(pos, radius, (r, g, b))
 
-        Draw the outline of a circle.
+        円の輪郭を描画します。
 
     .. method:: draw.filled_circle(pos, radius, (r, g, b))
 
-        Draw a filled circle.
+        塗り潰しで円を描画します。
 
     .. method:: draw.rect(rect, (r, g, b))
 
-        Draw the outline of a rectangle.
+        矩形の輪郭を描画します。
 
         Takes a :ref:`Rect <rect>`.
 
     .. method:: draw.filled_rect(rect, (r, g, b))
 
-        Draw a filled rectangle.
+        塗り潰しで矩形を描画します。
 
     .. method:: draw.text(text, [pos], **kwargs)
 
-        Draw text.
+        テキストを描画します。
 
-        There's an extremely rich API for positioning and formatting text; see
-        :doc:`ptext` for full details.
+        表示位置やフォーマットを細かに指定できる API もあります(詳細は :doc:`ptext` を参照)。
 
     .. method:: draw.textbox(text, rect, **kwargs)
 
+        指定された :ref:`Rect` に合わせた大きさでテキストを描画します。
+
         Draw text, sized to fill the given :ref:`Rect`.
 
-        There's an extremely rich API for formatting text; see
-        :doc:`ptext` for full details.
+        表示位置やフォーマットを細かに指定できる API もあります(詳細は :doc:`ptext` を参照)。
 
 .. _rect:
 
 Rect
 ----
 
-The `Pygame Rect`_ class is available as a built in. This can be used in a
-variety of ways, from detecting clicks within a region to drawing a box onto
-the screen:
+`Pygame Rect`_ クラスは組込みのオブジェクトとして利用可能です。このオブジェクトは、スクリーン上のクリックされた領域にボックスを描画するときなど、様々な使い方ができます。
 
-For example, you can draw a box with::
+たとえばボックスの描画はこのようにします ::
 
     RED = 200, 0, 0
     BOX = Rect((20, 20), (100, 100))
@@ -112,81 +105,67 @@ For example, you can draw a box with::
 .. _`Pygame Rect`: https://www.pygame.org/docs/ref/rect.html
 
 
-Resource Loading
-----------------
+リソースのロード
+--------------
 
-The ``images`` and ``sounds`` objects can be used to load images and sounds
-from files stored in the ``images`` and ``sounds`` subdirectories respectively.
-Pygame Zero will handle loading of these resources on demand and will cache
-them to avoid reloading them.
+``images`` と ``sounds`` オブジェクトはそれぞれ ``images`` and ``sounds`` サブディレクトリに保存されているファイルから画像とサウンドをロードするために使います。Pygame Zero はこれらのリソースをオンデマンドでロードし、リロードしなくて済むようにキャッシュします。
 
-You generally need to ensure that your images are named with lowercase letters,
-numbers and underscores only. They also have to start with a letter.
 
-File names like these will work well with the resource loader::
+通常、画像のファイル名は小文字、数字とアンダースコアだけになっている必要があります。また先頭は文字で始まるようにしてください。
+
+次のようなファイル名ならリソース・ローダは問題なく動作します ::
 
     alien.png
     alien_hurt.png
     alien_run_7.png
 
-These will not work::
+しかし次のような名前だと動きません ::
 
     3.png
     3degrees.png
     my-cat.png
     sam's dog.png
 
-The resource loader caches loaded images and sounds. To clear the cache (for
-instance, if you are running into memory issues), use the `unload()` and
-`unload_all()` functions.
+リソース・ローダーは画像やサウンドをキャッシュします。(たとえばメモリ容量の制限などの理由で)キャッシュをクリアしたいときは、関数 `unload()` や `unload_all()` を使用します。
 
-Example::
+例 ::
 
     cow = Actor('cow')
-    loader.images.unload('cow')  # clears the cache of cow.png
-    loader.images.unload_all()  # clears all cached image files
+    loader.images.unload('cow')  # キャッシュから cow.png をクリア
+    loader.images.unload_all()  # すべての画像キャッシュをクリア
 
 
-Images
-''''''
+画像
+''''
 
-Pygame Zero can load images in ``.png``, ``.gif``, and ``.jpg`` formats. PNG is
-recommended: it will allow high quality images with transparency.
+Pygame Zeroでロード可能な画像の形式は ``.png`` 、 ``.gif`` と ``.jpg`` です。高品質で透過表示をサポートしている PNG の利用をお勧めします。
 
-We need to ensure an images directory is set up. If your project contains the
-following files::
+images ディレクトリは予め作成しておく必要があります。たとえばプロジェクトに次のようなファイルがあるとします ::
 
     space_game.py
     images/alien.png
 
-Then ``space_game.py`` could draw the 'alien' sprite to the screen with this
-code::
+これで ``space_game.py`` に次のようなコードを書くことでスクリーンに alien スプライトを描画できます ::
 
     def draw():
         screen.clear()
         screen.blit('alien', (10, 10))
 
-The name passed to ``blit()`` is the name of the image file within the images
-directory, without the file extension.
+``blit()`` に渡される名前は images ディレクトリに置かれている画像のファイル名です。ただし拡張子は付けません。
 
-Or using the :ref:`actor` API, ::
+:ref:`actor` APIを使う方法もあります ::
 
     alien = Actor('alien')
 
     def draw():
         alien.draw()
 
-There are some restrictions on the file names in both cases: they may only
-contain lowercase latin letters, numbers and underscores. This is to prevent
-compatibility problems when your game is played on a different operating system
-that has different case sensitivity.
+上記何れの場合も付けられるファイル名には制限があります。使用できるのは小文字のアルファベット、数字とアンダースコアだけです。これはゲームを動かすオペレーティング・システムによって大文字、小文字の扱いが異なる場合があり、問題が発生することを防ぐためのものです。
 
 Image Surfaces
 ''''''''''''''
 
-You can also load images from the ``images`` directory using the ``images``
-object. This allows you to work with the image data itself, query its
-dimensions and so on::
+``images`` ディレクトリに置かれた画像を ``images`` オブジェクトを使ってロードすることもできます。この方法を使うと、画像データそのものを操作したり、サイズを問い合わせることが可能になります ::
 
     forest = []
     for i in range(5):
@@ -194,84 +173,73 @@ dimensions and so on::
             Actor('tree', topleft=(images.tree.get_width() * i, 0))
         )
 
-Each loaded image is a Pygame ``Surface``. You will typically use
-``screen.blit(...)`` to draw this to the screen. It also provides handy methods
-to query the size of the image in pixels:
+ロードした画像は Pygame の ``Surface`` オブジェクトになります。典型的な使い方は
+``screen.blit(...)`` でスクリーンに描画することです。このオブジェクトは画像のサイズをピクセル単位で問い合わせできるメソッドを備えています。
 
 .. class:: Surface
 
     .. method:: get_width()
 
-        Returns the width of the image in pixels.
+        画像の幅をピクセル単位で返します。
 
     .. method:: get_height()
 
-        Returns the height of the image in pixels.
+        画像の高さをピクセル単位で返します。
 
     .. method:: get_size()
 
-        Returns a tuple (width, height) indicating the size in pixels of the
-        surface.
+        ピクセル単位の画像のサイズを(幅, 高さ)のタプルにして返します。
 
     .. method:: get_rect()
 
-        Get a :class:`Rect` that is pre-populated with the bounds of the image
-        if the image was located at the origin.
+        画像が原点に位置していた場合、画像の境界のサイズが設定された
+	:class:`Rect` を返します。
 
-        Effectively this is equivalent to::
+        これは次のコードと同等の内容です ::
 
             Rect((0, 0), image.get_size())
 
 
-Sounds
-''''''
+サウンド
+'''''''
 
-Pygame Zero can load sounds in ``.wav`` and ``.ogg`` formats. WAV is great for
-small sound effects, while OGG is a compressed format that is more suited to
-music. You can find free .ogg and .wav files online that can be used in your
-game.
+Pygame Zeroでロード可能なサウンドの形式は ``.wav`` と ``.ogg`` です。WAV は
+サイズの小さな効果音に最適で、圧縮フォーマットの OGG は音楽に適しています。ゲームに使用できる .ogg や .wav ファイルをインターネット上で無償提供しているサイトもあります。
 
-We need to ensure a sounds directory is set up. If your project contains the
-following files::
+sounds ディレクトリは予め作成しておく必要があります。たとえばプロジェクトに次のようなファイルがあるとします ::
+
 
     drum_kit.py
     sounds/drum.wav
 
-Then ``drum_kit.py`` could play the drum sound whenever the mouse is clicked
-with this code::
+``drum_kit.py`` に次の内容を書くと、マウスがクリックされたらドラムの音を鳴らすようになります ::
 
     def on_mouse_down():
         sounds.drum.play()
 
-Each loaded sound is a Pygame ``Sound``, and has various methods to play and
-stop the sound as well as query its length in seconds:
+ロードしたサウンドは Pygame の ``Sound`` オブジェクトになります。このオブジェクトは様々なメソッドを備えており、サウンドの再生、停止やサウンドの再生時間の問い合せができます。
 
 .. class:: Sound
 
     .. method:: play()
 
-        Play the sound.
+        サウンドを再生します。
 
     .. method:: play(loops)
 
-        Play the sound, but loop it a number of times.
+        サウンドを指定した回数、繰り返し再生します。
 
-        :param loops: The number of times to loop. If you pass ``-1`` as the
-                      number of times to loop, the sound will loop forever (or
-                      until you call :meth:`.Sound.stop()`
+        :param loops: 繰り返し再生する回数。この回数を ``-1`` を指定すると、無限に(もしくは :meth:`.Sound.stop()` で停止するまで)繰り返し再生し続けます。
 
     .. method:: stop()
 
-        Stop playing the sound.
+        サウンドの再生を停止します。
 
     .. method:: get_length()
 
-        Get the duration of the sound in seconds.
+        サウンドの再生時間を秒単位で取得します。
 
-You should avoid using the ``sounds`` object to play longer pieces of music.
-Because the sounds sytem will fully load the music into memory before playing
-it, this can use a lot of memory, as well as introducing a delay while the
-music is loaded.
+長い音楽を再生するために ``sounds`` オブジェクトを使用することは避けてください。サウンドシステムは再生する前に音楽データをすべてメモリ上にロードしてしまうため、大量のメモリが必要になることがあり、ロードが完了するまで遅延が発生するためです。
 
 .. _music:
 
@@ -282,187 +250,146 @@ Music
 
 .. warning::
 
-    The music API is experimental and may be subject to cross-platform
-    portability issues.
+    Music API はまだ実験段階のものなので、クロスプラットフォームの移植性問題が発生する可能性があります。
 
-    In particular:
+    たとえば
 
-    * MP3 may not be available on some Linux distributions.
-    * Some OGG Vorbis files seem to hang Pygame with 100% CPU.
+    * Linux ディストリビューションによっては MP3 をサポートしていないものがあります。
+    * OGG Vorbis のファイルによっては CPU パワーが 100 パーセント消費されてしまい Pygame がハングしてしまうことがあります。
 
-    In the case of the latter issue, the problem may be fixed by re-encoding
-    (possibly with a different encoder).
+    後者については、サウンド・データを(できれば別のエンコーダを使って)エンコードし直すことで、解決できる可能性があります。
 
+組込みオブジェクト ``music`` は  ``music/`` ディレクトリに置かれた音楽を再生するための手段を提供します。(``images/`` や ``sounds/`` が存在する場合も並行で利用可能です)
 
-A built-in object called ``music`` provides access to play music from within
-a ``music/`` directory (alongside your ``images/`` and ``sounds/`` directories,
-if you have them). The music system will load the track a little bit at a time
-while the music plays, avoiding the problems with using ``sounds`` to play
-longer tracks.
+Music を使った場合、音楽データは少しずつロードされるため、 ``sounds`` で長い音楽を
+再生したときに発生する問題を回避できます。
 
-Another difference to the sounds system is that only one music track can be
-playing at a time. If you play a different track, the previously playing track
-will be stopped.
-
+もうひとつ、サウンドシステムと異なる点は、一度にひとつのトラックしか再生できないことです。もし何か再生中に別のトラックを再生すると、前に再生していたトラックは自動的に停止します。
 
 .. function:: music.play(name)
 
-    Play a music track from the given file. The track will loop indefinitely.
+    指定されたファイルの音楽トラックを再生します。トラックは無限にループ再生されます。
 
-    This replaces the currently playing track and cancels any tracks previously
-    queued with ``queue()``.
+    もし前に再生中のトラックがあればそれを置き換え、 ``queue()`` で待機中のトラックをキャンセルします。
 
-    You do not need to include the extension in the track name; for example, to
-    play the file ``handel.mp3`` on a loop::
+    トラック名にファイルの拡張子を付ける必要はありません。たとえばファイル
+    ``handel.mp3`` をループ再生したいときは次のように書きます ::
 
         music.play('handel')
 
 .. function:: music.play_once(name)
 
-    Similar to ``play()``, but the music will stop after playing through once.
+    ``play()`` と同様に音楽を再生しますが、一度再生したら停止します。
 
 .. function:: music.queue(name)
 
-    Similar to ``play_once()``, but instead of stopping the current music, the
-    track will be queued to play after the current track finishes (or after
-    any other previously queued tracks).
+     ``play_once()`` と同様一度だけの再生を意図するものですが、既に再生中のトラックがあってもそれを停止せず、次に再生する曲をキューに入れ、前の曲が完了してから再生します(キュー内にほかのトラックがある場合は、それらがすべて完了してから再生されます)。
 
 .. function:: music.stop()
 
-    Stop the music.
+    音楽の再生を停止します。
 
 .. function:: music.pause()
 
-    Pause the music temporarily. It can be resumed by calling
-    ``unpause()``.
+    音楽の再生を一時停止します。 ``unpause()`` の呼び出しで一時停止は解除できます。
 
 .. function:: music.unpause()
 
-    Unpause the music.
+    音楽再生の一時停止を解除します。
 
 .. function:: music.is_playing()
 
-    Returns True if the music is playing (and is not paused), False otherwise.
+    音楽が再生中でかつ一時停止されていなければ True を返し、それ以外だったら False を返します。
 
 .. function:: music.fadeout(duration)
 
-    Fade out and eventually stop the current music playback.
+    フェードアウトして、最終的に現在の音楽再生を停止します。
 
-    :param duration: The duration in seconds over which the sound will be faded
-                    out. For example, to fade out over half a second, call
-                    ``music.fadeout(0.5)``.
+    :param duration: 音が消えるまでの時間を秒で指定します。たとえば 0.5 秒でフェードアウトしたいなら ``music.fadeout(0.5)`` とします。
 
 .. function:: music.set_volume(volume)
 
-    Set the volume of the music system.
+    ミュージック・システムのボリュームを設定します。
 
-    This takes a number between 0 (meaning silent) and 1 (meaning full volume).
+    0(無音)から1(最大)までの値を指定できます。
 
 .. function:: music.get_volume()
 
-    Get the current volume of the music system.
+    現在のミュージック・システムのボリュームを取得します。
 
-
-If you have started a music track playing using :func:`music.play_once()`, you
-can use the :func:`on_music_end() hook <on_music_end>` to do something when the
-music ends - for example, to pick another track at random.
-
+:func:`music.play_once()` を使って音楽トラックの再生を開始した場合、  :func:`on_music_end() hook <on_music_end>` を使って再生終了時に何かを実行させることができます。これはたとえば、ランダムに別のトラックを選びたいときなどに有効です。
 
 .. _clock:
 
 Clock
 -----
 
-Often when writing a game, you will want to schedule some game event to occur
-at a later time. For example, we may want a big boss alien to appear after 60
-seconds. Or perhaps a power-up will appear every 20 seconds.
+ゲームを作成する場合、時間を遅らせてゲームイベントを発生させたいことがしばしばあります。たとえば 60 秒後に大きなボスのエイリアンを登場させたり、20 秒ごとにパワーアップのアイテムを表示したり、などです。
 
-More subtle are the situations when you want to delay some action for a shorter
-period. For example you might have a laser weapon that takes 1 second to charge
-up.
+もっと微妙に、わずかな時間だけアクションを遅らせたいこともあります。たとえば、充電に1秒かかるレーザー兵器とか。
 
-We can use the ``clock`` object to schedule a function to happen in the
-future.
+``clock`` オブジェクトを使うと、時間を置いて実行する関数のスケジュールができます。
 
-Let's start by defining a function ``fire_laser`` that we want to run in the
-future::
+では、時間を置いて実行したい関数 ``fire_laser`` を定義することから始めましょう ::
 
     def fire_laser():
         lasers.append(player.pos)
 
-Then when the fire button is pressed, we will ask the ``clock`` to call it for
-us after exactly 1 second::
+それから発射ボタンが押されると、正確に1秒後にこの関数が呼び出されるよう  ``clock`` に依頼します ::
 
     def on_mouse_down():
         clock.schedule(fire_laser, 1.0)
 
-Note that ``fire_laser`` is the function itself; without parentheses, it is
-not being called here! The clock will call it for us.
+ここで ``fire_laser`` の後には括弧がありません。関数を実行しているのではなく、関数そのものを渡していることに注意してください。この関数は clock が実行してくれるのです。
 
-(It is a good habit to write out times in seconds with a decimal point, like
-``1.0``. This makes it more obvious when you are reading it back, that you are
-referring to a time value and not a count of things.)
+(``1.0`` のように小数点付きの秒数で時間を指定するのは良い習慣です。後でコードを読み返すとき、この値が時間であり、物の数ではないことがわかるからです。)
 
-``clock`` provides the following useful methods:
+``clock`` は以下の便利なメソッドを提供しています。
 
 .. class:: Clock
 
     .. method:: schedule(callback, delay)
 
-        Schedule `callback` to be called after the given delay.
+        指定の時間経過後に `callback` を呼び出すようスケジュールします。
 
-        Repeated calls will schedule the callback repeatedly.
+        このメソッドの呼び出しを繰り返すと、コールバックも繰り返しスケジュールされます。
 
-        :param callback: A callable that takes no arguments.
-        :param delay: The delay, in seconds, before the function should be
-                      called.
+        :param callback: 引数を取らない呼び出し可能オブジェクト。
+        :param delay: 関数を呼び出すまでの遅延時間を秒で指定します。
 
     .. method:: schedule_unique(callback, delay)
 
-        Schedule `callback` to be called once after the given delay.
+        指定の時間経過後に `callback` を一度だけ呼び出すようスケジュールします。
 
-        If `callback` was already scheduled, cancel and reschedule it. This
-        applies also if it was scheduled multiple times: after calling
-        ``schedule_unique``, it will be scheduled exactly once.
+        もし同じ `callback` が既にスケジュールされていたら、一旦それをキャンセルして、スケジュールの再登録が行われます。
 
-        :param callback: A callable that takes no arguments.
-        :param delay: The delay, in seconds, before the function should be
-                      called.
+        これは複数回スケジュールされた場合にも当てはまります。 ``schedule_unique`` を呼び出した後、で複数回呼び出してもひとつしかスケジュールされません。
+
+        :param callback: 引数を取らない呼び出し可能オブジェクト。
+        :param delay: 関数を呼び出すまでの遅延時間を秒で指定します。
 
     .. method:: schedule_interval(callback, interval)
 
-        Schedule `callback` to be called repeatedly.
+        `callback` を繰り返し呼び出すようにスケジュールします。
 
-        :param callback: A callable that takes no arguments.
-        :param interval: The interval in seconds between calls to `callback`.
+        :param callback: 引数を取らない呼び出し可能オブジェクト。
+        :param interval: `callback` を呼び出す間隔を秒で指定します。
 
     .. method:: unschedule(callback)
 
-        Unschedule callback if it has been previously scheduled (either because
-        it has been scheduled with ``schedule()`` and has not yet been called,
-        or because it has been scheduled to repeat with
-        ``schedule_interval()``.
+        既にスケジュールされているコールバックをキャンセルします。 ``schedule()`` スケジュールされてまだ呼び出されていなもの、または ``schedule_interval()`` で繰り返しがスケジュールされているものをキャンセルします。
 
+Pygame Zero の clock は指定されたコールバックへの弱参照しか保持しないことに注意してください。オブジェクトとメソッドが他の場所で参照されていない場合、スケジュールされたイベントは発生しません。これは、clock がオブジェクトを生き続けさせ、何らかの理由で他のオブジェクトが消えてしまった後にイベントが発生し続けるのを防ぐのに役立ちます。
 
-Note that the Pygame Zero clock only holds weak references to each callback
-you give it. It will not fire scheduled events if the objects and methods are
-not referenced elsewhere. This can help prevent the clock keeping objects
-alive and continuing to fire unexpectedly after they are otherwise dead.
-
-The downside to the weak references is that you won't be able to schedule
-lambdas or any other object that has been created purely to be scheduled. You
-will have to keep a reference to the object.
+弱参照の欠点は、無名関数や他から参照されていないそのスケジュールだけのオブジェクトはスケジュールできないことです。オブジェクトへの参照は保持しておく必要があります。
 
 .. _actor:
 
 Actors
 ------
 
-Once you have many images moving around in a game it can be convenient to have
-something that holds in one place the image and where it is on screen. We'll
-call each moving image on screen an ``Actor``. You can create an actor by supplying
-at least an image name (from the images folder above). To draw the alien talked
-about above::
+ゲーム内で動く画像が多くなってくると、その画像とそれがスクリーン上のどの位置にあるかを保持してくれるものがあると便利です。個々の動く画像を ``Actor``
+(アクター)と呼びます。Actor は(前述の images ディレクトリ内にある)画像ファイル名を指定するだけで生成できます。前にも使ったエイリアンをアクターを使って表示してみます ::
 
     alien = Actor('alien', (50, 50))
 
@@ -470,7 +397,7 @@ about above::
         screen.clear()
         alien.draw()
 
-You can move the actor around by setting its pos attribute in an update::
+位置の属性を関数 update の中で変更することで、Actor を動かすことができます ::
 
     def update():
         if keyboard.left:
@@ -478,37 +405,33 @@ You can move the actor around by setting its pos attribute in an update::
         elif keyboard.right:
             alien.x += 1
 
-And you may change the image used to draw the actor by setting its image
-attribute to some new image name::
+また、Actor の属性 image を別の新たな画像名に変更することで、表示中の画像を変えることもできます ::
 
     alien.image = 'alien_hurt'
 
-Actors have all the same attributes and methods as :ref:`Rect <rect>`,
-including methods like `.colliderect()`__ which can be used to test whether
-two actors have collided.
+Actor は :ref:`Rect <rect>` と同じ属性とメソッドを備えています。そのメソッドのひとつ
+ `.colliderect()`__ を使うと二つの Actor が衝突しているかどうかを調べること ができます。
 
 .. __: https://www.pygame.org/docs/ref/rect.html#pygame.Rect.colliderect
 
 
-Positioning Actors
-''''''''''''''''''
+Actor の位置指定
+''''''''''''''''
 
-If you assign a new value to one of the position attributes then the actor will
-be moved. For example::
+位置の属性に新たな値を代入すると、Actor は移動します。たとえば ::
+
 
     alien.right = WIDTH
 
-will position the alien so its right-hand side is set to ``WIDTH``.
+この例ではエイリアンの右端の位置を ``WIDTH`` にしています。
 
-Similarly, you can also set the initial position of the actor in the
-constructor, by passing one of these as a keyword argument: ``pos``,
-``topleft``, ``topright``, ``bottomleft``, ``bottomright``, ``midtop``,
-``midleft``, ``midright``, ``midbottom`` or ``center``:
+同様に最初の表示位置を Actor のコンストラクタで指定することもできます。使用できるキーワード引数は ``pos``, ``topleft``, ``topright``, ``bottomleft``,
+``bottomright``, ``midtop``, ``midleft``, ``midright``, ``midbottom``,
+``center`` の何れかです。
 
 .. image:: _static/actor/anchor_points.png
 
-This can be done during creation or by assigning a pair of x, y co-ordinates.
-For example::
+これは次のように、オブジェクト生成の際、次のように xとyの座標を渡す方法を使います ::
 
     WIDTH = 200
     HEIGHT = 200
@@ -521,32 +444,24 @@ For example::
 
 .. image:: _static/actor/alien_center.png
 
-Changing ``center=(100, 100)`` to ``midbottom=(100, 200)`` gives you:
+``center=(100, 100)`` の部分を ``midbottom=(100, 200)`` に変えると次のようになります。
 
 .. image:: _static/actor/alien_midbottom.png
 
-If you don't specify an initial position, the actor will initially be
-positioned in the top-left corner (equivalent to ``topleft=(0, 0)``).
+初期位置を指定しなかった場合, Actor は左上隅(``topleft=(0, 0)`` を指定した場合と同じ)に表示されます.
 
 .. _anchor:
 
-Anchor point
-''''''''''''
+アンカーポイント
+''''''''''''''
 
-Actors have an "anchor position", which is a convenient way to position the
-actor in the scene. By default, the anchor position is the center, so the
-``.pos`` attribute refers to the center of the actor (and so do the ``x`` and
-``y`` coordinates). It's common to want to set the anchor point to another
-part of the sprite (perhaps the feet - so that you can easily set the Actor to
-be "standing on" something)::
+Actor には「アンカー(anchor)ポイント」というものがあります。これはシーン内で Actor を配置するときに役立ちます。アンカーポイントのデフォルトは center (中心)です。これにより ``.pos`` も Actor の中心となります(``x`` と ``y`` の座標も同様です). アンカーポイントはスプライトの別の部分(たいてい足)に設定するのが一般的です。そうすることで Actor を何かの上に立たせる設定が可能になります ::
 
     alien = Actor('alien', anchor=('center', 'bottom'))
     spaceship = Actor('spaceship', anchor=(10, 50))
 
-``anchor`` is specified as a tuple ``(xanchor, yanchor)``, where the values can
-be floats or the strings ``left``, ``center``/``middle``, ``right``, ``top`` or
-``bottom`` as appropriate.
-
+``anchor`` は ``(x 座標のアンカー, y 座標のアンカー)`` のタプルで指定します。それぞれの値は浮動小数点数または文字列で、文字列の場合 ``left``, ``center``, ``middle``,
+``right``, ``top``, ``bottom`` の何れかを適宜指定します。
 
 .. _rotation:
 
@@ -555,29 +470,27 @@ Rotation
 
 .. versionadded:: 1.2
 
-The ``.angle`` attribute of an Actor controls the rotation of the sprite, in
-degrees, anticlockwise (counterclockwise).
+``.angle`` はスプライトの回転をコントロールする Actor の属性です。反時計回りで角度を指定します。
 
-The centre of rotation is the Actor's :ref:`anchor point <anchor>`.
+回転の中心は Actor の :ref:`アンカーポイント <anchor>` になります。
 
-Note that this will change the ``width`` and ``height`` of the Actor.
+回転をすると Actor の ``width`` と ``height`` が変わることに注意してください。
 
-For example, to make an asteroid sprite spinning slowly anticlockwise in
-space::
+次の例は宇宙空間で小惑星がゆっくりと反時計回りに回転するものです ::
+
 
     asteroid = Actor('asteroid', center=(300, 300))
 
     def update():
         asteroid.angle += 1
 
-To have it spin clockwise, we'd change ``update()`` to::
+時計回りに回転させたいときは、  ``update()`` を次のように変更します ::
+
 
     def update():
         asteroid.angle -= 1
 
-As a different example, we could make an actor ``ship`` always face the mouse
-pointer. Because :meth:`~Actor.angle_to()` returns 0 for "right", the sprite we
-use for "ship" should face right::
+もうひとつ、次の例は ``ship`` (宇宙船) Actor が正面を常にマウスポインタの方向へ向くようにするものです。マウスポインタが右にある場合 :meth:`~Actor.angle_to()` は 0 を返すため、宇宙船のスプライトも右を向きます ::
 
     ship = Actor('ship')
 
@@ -585,214 +498,180 @@ use for "ship" should face right::
         ship.angle = ship.angle_to(pos)
 
 .. image:: _static/rotation.svg
-    :alt: Diagram showing how to set up sprites for rotation with angle_to()
+    :alt: angle_to() を使ってスプライトを回転させる方法
 
-Remember that angles loop round, so 0 degrees == 360 degrees == 720 degrees.
-Likewise -180 degrees == 180 degrees.
+角度は1回転すると 0 に戻ります。ですから 360 度と 720 度はどちらも 0 度と同じになります。また -180 度は 180 度と同じです。
 
-
-Distance and angle to
-'''''''''''''''''''''
+距離と角度
+'''''''''
 
 .. versionadded:: 1.2
 
-Actors have convenient methods for calculating their distance or angle to other
-Actors or ``(x, y)`` coordinate pairs.
+Actor には他の Actor や  ``(x, y)`` 形式の座標との距離や角度を計算してくれる便利なメソッドがあります。
 
 .. method:: Actor.distance_to(target)
 
-    Return the distance from this actor's position to target, in pixels.
-
+    この Actor の位置から target までの距離をピクセル数で返します。
 
 .. method:: Actor.angle_to(target)
 
-    Return the angle from this actor's position to target, in degrees.
+    この Actor の位置から target までの角度を度で返します。
 
-    This will return a number between -180 and 180 degrees. Right is 0 degrees
-    and the angles increase going anticlockwise.
+    このメソッドは -180 度から 180 度までの値を返します。右が 0 度で、反時計回りに数値が増加します。
 
-    Therefore:
+    したがって次のようになります。
 
-    * Left is 180 degrees.
-    * Up is 90 degrees.
-    * Down is -90 degrees.
+    * 左は 180 度
+    * 上は 90 度
+    * 下は -90 度
 
 
 .. _transparency:
 
-Transparency
-''''''''''''
+透明度
+''''''
 
 .. versionadded:: 1.3
 
-In some cases it is useful to make an Actor object partially transparent. This
-can be used to fade it in or out, or to indicate that it is "disabled".
+場合によって、Actor オブジェクトを部分的に透明にできると便利なことがあります。この手法はフェードイン、フェードアウト表示のほかに、それが「使えない」状態になっていること示すときなどに使われます。
 
-The ``.opacity`` attribute of an Actor controls how transparent or opaque it
-is.
+透明度は Actor の ``.opacity`` 属性でコントロールします。
 
-* When an actor is not at all transparent, we say it is "opaque" and it has
-  ``opacity`` of ``1.0``, and you can't see through it at all.
-* When an actor is completely transparent, it has an ``opacity`` of ``0.0``.
-  This will make it completely invisible.
+* Actor が完全に不透明の場合、その ``opacity`` は ``1.0`` であり、その背後はまったく見えません。
+* Actor が完全に透明の場合、その ``opacity`` は ``0.0`` であり、見えない状態となります。
 
-To make an actor that is half-transparent (like a ghost), you could write::
+Actor を幽霊のように半透明にしたいときは、次のようにします ::
 
     ghost = Actor('ghost')
     ghost.opacity = 0.5
 
-This diagram shows the scale; the grey checkerboard is used to give the sense
-of transparency:
+次の図は透明度の尺度を示しています。なお灰色のチェッカーボードは透明感表現するのに使用しています。
 
 .. image:: _static/opacity.svg
-    :alt: The opacity scale in Pygame Zero.
+    :alt: Pygame Zero での透明度の尺度
 
 .. tip::
 
-    The order in which you draw overlapping transparent objects still matters.
-    A ghost seen through a window looks slightly different to a window seen
-    through a ghost.
+    透明なオブジェクトが重なる場合、その描画順は重要です。窓ごしに見える幽霊と幽霊の背後に透けて見える窓はちょっと違いますよね。
 
 
-The Keyboard
-------------
+キーボード
+---------
 
-You probably noticed that we used the ``keyboard`` in the above code.
-If you'd like to know what keys are pressed on the keyboard, you can query the
-attributes of the ``keyboard`` builtin. If, say, the left arrow is held down,
-then ``keyboard.left`` will be ``True``, otherwise it will be ``False``.
+``keyboard`` については既にこれまでのコードの中に登場していることに気付いていることでしょう。どのキーが押されているのか知りたいときは、組込みオブジェクト ``keyboard`` の属性を調べます。たとえば左矢印キーが押されているときは ``keyboard.left`` が ``True`` になります。それ以外のキーの場合だったら ``False`` になります。
 
-There are attributes for every key; some examples::
+各キーに対応した属性がありますが、その一部を例として紹介します ::
 
-    keyboard.a  # The 'A' key
-    keyboard.left  # The left arrow key
-    keyboard.rshift  # The right shift key
-    keyboard.kp0  # The '0' key on the keypad
-    keyboard.k_0  # The main '0' key
+    keyboard.a  # 'A' キー
+    keyboard.left  # 左矢印キー
+    keyboard.rshift  # 右シフトキー
+    keyboard.kp0  # テンキーの '0'
+    keyboard.k_0  # メインの '0' キー
 
-The full set of key constants is given in the `Buttons and Keys`_
-documentation, but the attributes are lowercase, because these are variables
-not constants.
+すべてのキーの定数は `Buttons and Keys`_ に記されている通りですが、属性は小文字であることに注意してください。キーボードの属性は定数とは違います。
 
 .. deprecated:: 1.1
 
-    Uppercase and prefixed attribute names (eg. ``keyboard.LEFT`` or
-    ``keyboard.K_a``) are now deprecated; use lowercase attribute names
-    instead.
+    大文字で始まる属性名(``keyboard.LEFT`` や ``keyboard.K_a`` など)は廃止になりました。小文字の属性名を使用してください。
 
 .. _`Buttons and Keys`: hooks.html#buttons-and-keys
 
 .. versionadded:: 1.1
 
-    You can now also query the state of the keys using the keyboard constants
-    themselves::
+    キーの状態はキーボード定数を使っても調べられるようになりました ::
 
-        keyboard[keys.A]  # True if the 'A' key is pressed
-        keyboard[keys.SPACE]  # True if the space bar is pressed
+        keyboard[keys.A]  # 'A' キーが押されていたら True
+        keyboard[keys.SPACE]  # スペースキーが押されていたら True
 
 
-Animations
-----------
+アニメーション
+------------
 
-You can animate most things in pygame using the builtin ``animate()``. For
-example, to move an :ref:`Actor <actor>` from its current position on the
-screen to the position ``(100, 100)``::
+Pygame のたいていのものは、組込みの関数 ``animate()`` を使ってアニメーションにできます。たとえば :ref:`Actor <actor>` を現在の位置から  ``(100, 100)`` へ動かす場合、次のように書きます。
 
     animate(alien, pos=(100, 100))
 
 .. function:: animate(object, tween='linear', duration=1, on_finished=None, **targets)
 
-    Animate the attributes on object from their current value to that
-    specified in the targets keywords.
+    オブジェクトの属性を、現在の値からキーワード引数 target に指定された値までのアニメーションにします。
 
-    :param tween: The type of *tweening* to use.
-    :param duration: The duration of the animation, in seconds.
-    :param on_finished: Function called when the animation finishes.
-    :param targets: The target values for the attributes to animate.
+    :param tween: 使用するアニメーション *トゥイーン* のタイプ。
+    :param duration: アニメーションの開始から終了までの時間を秒で指定。
+    :param on_finished: アニメーション終了時に呼び出す関数。
+    :param targets: アニメーション化する属性のターゲット値。
 
-The tween argument can be one of the following:
+キーワード引数 tween には以下の何れかの値を指定できます。
 
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'linear'           | Animate at a constant speed from start to finish     | .. image:: images/linear.png           |
+| 'linear'           | アニメーションの最初から最後まで一定のスピードで動かします。 | .. image:: images/linear.png           |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'accelerate'       | Start slower and accelerate to finish                | .. image:: images/accelerate.png       |
+| 'accelerate'       | ゆっくりしたスピードで始め、だんだん早くします | .. image:: images/accelerate.png       |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'decelerate'       | Start fast and decelerate to finish                  | .. image:: images/decelerate.png       |
+| 'decelerate'       | 早いスピードで始め、だんだん遅くします       |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'accel_decel'      | Accelerate to mid point and decelerate to finish     | .. image:: images/accel_decel.png      |
+| 'accel_decel'      | アニメーション時間のちょうど中間が一番早くなるようにします     | .. image:: images/accel_decel.png      |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'in_elastic'       | Give a little wobble at the end                      | .. image:: images/in_elastic.png       |
+| 'in_elastic'       | アニメーションの最後に若干の揺らぎを入れます                      | .. image:: images/in_elastic.png       |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'out_elastic'      | Have a little wobble at the start                    | .. image:: images/out_elastic.png      |
+| 'out_elastic'      | アニメーションの最初に若干の揺らぎを入れます                    | .. image:: images/out_elastic.png      |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'in_out_elastic'   | Have a wobble at both ends                           | .. image:: images/in_out_elastic.png   |
+| 'in_out_elastic'   | アニメーションの最初と最後に揺らぎを入れます                           | .. image:: images/in_out_elastic.png   |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'bounce_end'       | Accelerate to the finish and bounce there            | .. image:: images/bounce_end.png       |
+| 'bounce_end'       | スピードをだんだん早くして最後に弾みを入れます            | .. image:: images/bounce_end.png       |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'bounce_start'     | Bounce at the start                                  | .. image:: images/bounce_start.png     |
+| 'bounce_start'     | アニメーションの最初に弾みを入れます                                  | .. image:: images/bounce_start.png     |
 +--------------------+------------------------------------------------------+----------------------------------------+
-| 'bounce_start_end' | Bounce at both ends                                  | .. image:: images/bounce_start_end.png |
+| 'bounce_start_end' | アニメーションの最初と最後に弾みを入れます                                  | .. image:: images/bounce_start_end.png |
 +--------------------+------------------------------------------------------+----------------------------------------+
 
-The ``animate()`` function returns an ``Animation`` instance:
+関数 ``animate()`` は ``Animation`` のインスタンスを返します。
 
 .. class:: Animation
 
     .. method:: stop(complete=False)
 
-        Stop the animation, optionally completing the transition to the final
-        property values.
+        アニメーションを停止します。オプションで停止する際の属性値を指定できます。
 
-        :param complete: Set the animated attribute to the target value.
+        :param complete: アニメーションが停止する際の属性値を指定します。
 
     .. attribute:: running
 
-        This will be True if the animation is running. It will be False
-        when the duration has run or the ``stop()`` method was called before
-        then.
+        このメソッドが True を返したら、アニメーションは動作中です。アニメーションが完了または ``stop()`` メソッドにより停止したときは False を返します。
 
     .. attribute:: on_finished
 
-        You may set this attribute to a function which will be called
-        when the animation duration runs out. The ``on_finished`` argument
-        to ``animate()`` also sets this attribute. It is not called when
-        ``stop()`` is called. This function takes no arguments.
+        アニメーションが完了したときに呼び出す関数をこの属性にセットできます。 関数 ``animate()`` でキーワード引数 ``on_finished`` を指定した場合も、この属性にその内容が引き継がれます。ただし ``stop()`` で停止したときは、関数は呼び出されません。またこの関数に引数は指定できません。
 
-
-Tone Generator
---------------
+トーン・ジェネレータ
+------------------
 
 .. versionadded:: 1.2
 
-Pygame Zero can play tones using a built-in synthesizer.
+Pygame Zero 組込みのシンセサイザーを使って音を再生することができます。
 
 .. function:: tone.play(pitch, duration)
 
-    Play a note at the given pitch for the given duration.
+    指定された高さと、長さで単音を再生します。
 
-    Duration is in seconds.
+    長さは秒数で指定します。
 
-    The `pitch` can be specified as a number in which case it is the frequency
-    of the note in hertz.
+    `pitch` は周波数の単位ヘルツの値を数値で指定します。
 
-    Alternatively, the pitch can be specified as a string representing a note
-    name and octave. For example:
+    上記のほか `pitch` を音名で指定する方法もあります。この場合、音名とオクターブの文字列を使います。以下はその例です。
 
-    * ``'E4'`` would be E in octave 4.
-    * ``'A#5'`` would be A-sharp in octave 5.
-    * ``'Bb3'`` would be B-flat in octave 3.
+    * ``'E4'`` は第 4 オクターブ E です。
+    * ``'A#5'`` は第 5 オクターブの A シャープです。
+    * ``'Bb3'`` は第 3 オクターブの B フラットです。
 
-Creating notes, particularly long notes, takes time - up to several
-milliseconds. You can create your notes ahead of time so that this doesn't slow
-your game down while it is running:
+音の生成、特に長い音の生成には時間がかかります(最大で数ミリ秒)。あらかじめ必要な音を生成しておくと、ゲームの実行を遅くせずに済みます。
 
 .. function:: tone.create(pitch, duration)
 
-    Create and return a Sound object.
+    Sound オブジェクトを生成して返します。
 
-    The arguments are as for play(), above.
+    再生用のメソッド play() の引数などは前に述べた通りです。
 
-This could be used in a Pygame Zero program like this::
+Pygame Zero プログラムの中で次のような使い方をします ::
 
     beep = tone.create('A3', 0.5)
 
@@ -803,102 +682,85 @@ This could be used in a Pygame Zero program like this::
 .. _data_storage:
 
 
-Data Storage
-------------
+データ・ストレージ
+----------------
 
-The ``storage`` object behaves just like a Python dictionary but its contents
-are preserved across game sessions. The values you assign to storage will be
-saved as JSON_, which means you can only store certain types of objects in it:
-``list``/``tuple``, ``dict``, ``str``, ``float``/``int``, ``bool``, and
-``None``.
+``storage`` オブジェクトは PYthon の辞書に似ていますが、その内容はゲーム・セッションを通じて保存されます。ストレージにセットした値は JSON_ 形式で保存されます。したがって保存可能なデータの型は ``list``/``tuple``, ``dict``, ``str``, ``float``/``int``, ``bool``, ``None`` に限られます。
 
 .. _JSON: https://en.wikipedia.org/wiki/JSON
 
-The ``storage`` for a game is initially empty. Your code will need to handle
-the case that values are loaded as well as the case that no values are found.
+ゲームの ``storage`` の初期状態は空です。したがってプログラムは、ストレージから読み込んだときに、値が何もないことを考慮して作成する必要があります。
 
-A tip is to use ``setdefault()``, which inserts a default if there is no value
-for the key, but does nothing if there is.
+ヒントは  ``setdefault()`` を使うことです。これはキーに対応する値が無い場合はデフォルトの値を挿入するようになっています。値があるときは何もしません。
 
-For example, we could write::
+たとえば次のようにして使います ::
 
     storage.setdefault('highscore', 0)
 
-After this line is executed, ``storage['highscore']`` will contain a value -
-``0`` if there was no value loaded, or the loaded value otherwise. You could
-add all of your ``setdefault`` lines towards the top of your game, before
-anything else looks at ``storage``::
+上記の行が実行されると、 ``storage['highscore']`` に対応する値が存在しなかった場合は値 ``0`` がセットされ、存在したときは何もしません。
+
+他のコードが  ``storage`` を参照する前、 ゲームの冒頭で ``setdefault`` を記述しておくようにしましょう ::
 
     storage.setdefault('level', 1)
     storage.setdefault('player_name', 'Anonymous')
     storage.setdefault('inventory', [])
 
-Now, during gameplay we can update some values::
+そして、ゲームが始まったら値を次のように更新します ::
 
     if player.colliderect(mushroom):
         score += 5
         if score > storage['highscore']:
             storage['highscore'] = score
 
-You can read them back at any time::
+ストレージにセットした値はいつでも読み出せます ::
 
     def draw():
         ...
         screen.draw.text('Highscore: ' + storage['highscore'], ...)
 
-...and of course, they'll be preserved when the game next launches.
+そしてもちろんゲームを終了しても、次に起動したときのために値は保存されます。
 
-These are some of the most useful methods of ``storage``:
+``storage`` のメソッドの中でもよく使われるものは以下の通りです。
 
 .. class:: Storage(dict)
 
     .. method:: storage[key] = value
 
-        Set a value in the storage.
+        値 value をストレージにセットします。
 
     .. method:: storage[key]
 
-        Get a value from the storage. Raise KeyError if there is no such key
-        in the storage.
+        ストレージから値を取得します。指定した key に対応する値がストレージに無いときは KeyError が発生します。
 
     .. method:: setdefault(key, default)
 
-        Insert a default value into the storage, only if no value already
-        exists for this key.
+        指定した key に対応する値がまだストレージに存在しない場合に限り、 default で指定した値をセットします。
 
     .. method:: get(key, default=None)
 
-        Get a value from the storage. If there is no such key, return default,
-        or None if no default was given.
+        ストレージから値を取得します。指定した key に対応する値が無い場合、default の指定があればその値を、無ければ None を返します。
 
     .. method:: clear()
 
-        Remove all stored values. Use this if you get into a bad state.
+        ストレージの値すべてを削除します。何かおかしくなってやり直したいときは、これを使ってください。
 
     .. method:: save()
 
-        Saves the data to disk now. You don't usually need to call this, unless
-        you're planning on using ``load()`` to reload a checkpoint, for
-        example.
+        データを直ちにディスクに保存します。通常このメソッドを呼び出す必要はありませんが、チェックポイントで  ``load()`` を使って再読み込みを実行したいときなどは、その前にこれを呼び出す必要があります。
 
     .. method:: load()
 
-        Reload the contents of the storage with data from the save file. This
-        will replace any existing data in the storage.
+        保存ファイルからデータをストレージに再読み込みします。これを実行すると、既存のストレージのデータはすべて置き換えられてしまうので注意してください。
 
     .. attribute:: path
 
-        The actual path to which the save data will be written.
+        ストレージ・データの書き込み先ファイルのパスです。
 
+.. 注意::
 
-.. caution::
+    ゲーム・プログラムを変更すると、 ``storage`` に保存されている値そのままでは正しく動かなくなることがあります。まず間違いがないか確認し、必要があれば ``.clear()`` で一旦すべてのデータをクリア、またはストレージのデータファイルを削除してください。
 
-    As you make changes to your game, ``storage`` could contain values that
-    don't work with your current code. You can either check for this, or call
-    ``.clear()`` to remove all old values, or delete the save game file.
+.. ヒント::
 
-
-.. tip::
-
-    Remember to check that your game still works if the storage is empty!
+    ストレージが空のときも、ゲームがちゃんと動くことを確認しておきましょう。
 
