@@ -1,82 +1,59 @@
-Roadmap
-=======
+ロードマップ
+==========
 
-Pygame Zero is an open source project, and as with any such project, the
-development roadmap is subject to change.
+Pygame Zero はオープンソースのプロジェクトです。他のオープンソース・プロジェクトと同様、開発ロードマップは変更する可能性があります。
 
-This document just lays out some goals for future releases, but there is **no
-guarantee** that these targets will be hit.
+このドキュメントは将来のリリースのためのいくつかの目標を掲載していますが、 **その目標が達成される保証はありません** 。
 
+翻訳
+----
 
-Translations
-------------
+Pygame Zero は若いユーザーを対象にしています。しかし、若いユーザーはドキュメントが自分の言語で提供されていないと、英語版を読む力まだないことがあります。
 
-Pygame Zero is aimed at young users, whose English skills might not be good
-enough to read the documentation if it isn't in their own language.
+ドキュメントの翻訳版を提供することは、新たなユーザーが Pygame Zero を使う上で大きな助けになります。これは多くの人の貢献を必要としている部分です。わたしひとりの語学力で対応しきれるものではありません!
 
-Adding translations of the documentation would help to bring Pygame Zero to new
-users. This is something that needs contributors to help with. My own language
-skills aren't good enough!
-
-Please see :ref:`the translating guide <translating>` if you think you can
-help.
+翻訳への貢献が可能な方は :ref:`翻訳ガイド <translating>` を参照してください。
 
 
-Gamepad Support
----------------
+ゲームコントローラのサポート
+-------------------------
 
 Github Issue: `#70 <https://github.com/lordmauve/pgzero/issues/70>`_
 
-SNES-style gamepads are now extremely cheap. For example, they are sold for
-a few pounds from the `Pi Hut`_, in packs of 2 at Amazon_, and even in some
-Raspberry Pi bundles.
+スーパーファミコンタイプのゲームコントローラはとても安く販売されています。 `Pi Hut`_ なら数ポンド、 Amazon_ では2個セット、Raspberry Pi とのバンドルで販売されているものもあります。
 
-Gamepad support should not be limited to these specific models; rather, we
-should treat this as a lowest-common-denominator across modern gamepads, as
-nearly all more modern gamepads have at least as many buttons and axes.
+ゲームコントローラのサポートはこのような特定のモデルだけに留めるべきではありません。今どきのほとんどのゲームコントローラが最低限備えているボタンや方向キーを最小公約数的に扱うべきだと考えています。
 
-This feature needs to be added in a way that will not **require** a gamepad to
-play any Pygame Zero game, in order to follow the principle of
-:ref:`accessibility`.
+またこの機能は、:ref:`アクセシビリティ` の原則に準じ、Pygame Zero ゲームをプレイするためにゲームコントローラを **必須** としない方法で追加する必要があります。
 
 .. _`Pi Hut`: https://thepihut.com/products/raspberry-pi-compatible-usb-gamepad-controller-snes-style
 .. _Amazon: https://www.amazon.co.uk/s/ref=nb_sb_noss_2?url=search-alias%3Delectronics&field-keywords=usb+snes
 
 
-Surface juggling
-----------------
+サーフェース・ジャグリング
+-----------------------
 
 Github Issue: `#71 <https://github.com/lordmauve/pgzero/issues/71>`_
 
-Pygame experts make lots of use of off-screen surfaces to create interesting
-effects.
+Pygame のエキスパートたちは、おもしろい効果を生み出すためにオフスクリーンの Surface を多用しています。
 
-Pygame Zero chose to consider only the screen surface, which we wrap with
-a richer ``Screen`` API for drawing, etc.
+一方 Pygame Zero スクリーン Surface だけをサポートする方法を選択しました。これは描画などを行うリッチな API ``Screen`` にラップして提供されています。
 
-The problem is that there is no easy path to using additional surfaces -
-Pygame Zero immediately becomes dead weight as you start to look past that
-curtain.
+しかしこのため、簡単に Surface を追加できなくなっています。この点からすると、 Pygame Zero はひどく使いにくいものになっています。
 
-We should look to smooth out this path to make Pygame Zero Actors and Screen
-work better with custom surfaces.
+Pygame Zero の Actor と Screen でうまく機能するカスタム Surface の追加方法を用意する必要があります。
 
+ストレージ
+---------
 
-Storage
--------
+.. 注意::
 
-.. note::
-
-    A :ref:`storage API <data-storage>` has now been developed and is planned
-    for inclusion in Pygame Zero 1.3.
+    :ref:`ストレージ API <data-storage>` は開発が完了しており Pygame Zero 1.3 から提供される予定となっています。
 
 Github Issue: `#33 <https://github.com/lordmauve/pgzero/issues/33>`_
 
-It would be useful for users to be able to save and load data.
+データの保存やロードに役立つ機能です。
 
-The obvious application is save games, but saving and loading whole games can
-be pretty hard to get right. The simpler application would just be saving
-settings, customisations, high scores, or the highest level reached.
+すぐに思いつくのはゲームを保存することですが、ゲーム全体を保存してロードするのはかなり難しくなってしまうことがあります。より簡単な使い方は設定、カスタマイズ内容、ハイスコア、到達したレベルなどを保存することです。
 
-Python of course has APIs for reading and writing files, but this has
-additional complexity that teachers might not want to teach immediately.
+もちろん Python は標準でファイルを読み書きするための API を備えていますが、こちらには先生が直ちに教えることを躊躇してしまうような複雑さがあります。
