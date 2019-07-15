@@ -1,24 +1,16 @@
-Other libraries like Pygame Zero
-================================
+Pygame Zero に似たライブラリ
+==========================
 
-Pygame Zero started a trend for Python "zero" libraries. Our friends have
-created these great libraries. Some of these can be combined with Pygame Zero!
-
+Pygame Zero は Python のトレンド、"zero" ライブラリ・シリーズのひとつとしてスタートしました。仲間たちがこれらの素晴しいライブラリを作っています。その内いくつかは、Pygame Zero と一緒に合わせて使うこともできます。
 
 Network Zero
 ------------
 
-`Network Zero`_ makes it simpler to have several machines or several processes
-on one machine discovering each other and talking across a network.
+`Network Zero`_ を使うと複数のマシン、あるいは同一マシンの複数プロセスの相互検知とネットワーク通信を簡単に実現できます。
 
-.. caution::
+.. 注意::
 
-    If you want to use Network Zero with Pygame Zero, make sure you don't let
-    it **block** (stop everything while waiting for messages). This will
-    interrupt Pygame Zero so that it stops animating the screen or even
-    responding to input.  Always set the ``wait_for_s`` or ``wait_for_reply_s``
-    options to ``0`` seconds.
-
+    Network Zero を Pygame Zero と一緒に使う場合、ブロック(ネットワークのメッセージ待ちで処理を止めてしまうこと)をさせてはいけません。Pygame Zero の中でこのブロックが発生すると、スクリーンのアニメーションや入力に対する応答処理なども止まってしまいます。 ``wait_for_s`` または ``wait_for_reply_s`` には常にオプションの値  ``0`` 秒を指定し、ブロックしないようにしてください。
 
 .. _`Network Zero`: https://networkzero.readthedocs.io
 
@@ -26,12 +18,9 @@ on one machine discovering each other and talking across a network.
 GUI Zero
 --------
 
-`GUI Zero`_ is a library for creating Graphical User Interfaces (GUIs) with
-windows, buttons, sliders, textboxes and so on.
+`GUI Zero`_ はウィンドウ、ボタン、スライダー、テキストボックスなどのグラフィカル・ユーザー・インターフェース (GUI) を作成するためのライブラリです。
 
-Because GUI Zero and Pygame Zero both provide different approaches for drawing
-to the screen, they are not usable together.
-
+ただし GUI Zero と Pygame Zero はそれぞれ異なるやり型でスクリーンの描画を行なっているため、両者を一緒に使うことはできません。
 
 .. _`GUI Zero`: https://lawsie.github.io/guizero/
 
@@ -39,19 +28,14 @@ to the screen, they are not usable together.
 GPIO Zero
 ---------
 
-`GPIO Zero`_ is a library for controlling devices connected to the General
-Purpose Input/Output (GPIO) pins on a `Raspberry Pi`_.
+`GPIO Zero`_ は  `Raspberry Pi`_ の General Purpose Input/Output (GPIO) 
+ピンに接続されたデバイスを制御するためのライブラリです。
 
-GPIO Zero generally runs in its own thread, meaning that it will usually work
-very well with Pygame Zero.
+GPIO Zero 自体が独自のスレッドで動作するため、問題なく Pygame Zero と組み合わせて使うことができます。
 
-.. caution::
+.. 注意::
 
-    When copying GPIO Zero examples, do not copy the ``time.sleep()`` function
-    calls or ``while True:`` loops, as these will stop Pygame Zero animating
-    the screen or responding to input. Use :ref:`clock` functions instead to
-    call functions periodically, or the :func:`update()` function to check a
-    value every frame.
+    GPIO Zero のサンプルコードをコピーして試す際、 ``time.sleep()`` の呼び出しや ``while True:`` ループをそのまま使わないようにしてください。これらの処理は Pygame Zero のスクリーン・アニメーションや入力に対する応答処理などを止めてしまいます。関数を定期的に呼び出したいときは  :ref:`clock` を、フレーム毎に値のチェックをしたいときは :func:`update()` を使うようにしてください。
 
 .. _`GPIO Zero`: https://gpiozero.readthedocs.io/
 .. _`Raspberry Pi`: https://www.raspberrypi.org/
@@ -60,15 +44,13 @@ very well with Pygame Zero.
 Adventurelib
 ------------
 
-`Adventurelib`_ is a library for creating making text-based games easier to
-write (and which doesn't do everything for you!).
+`Adventurelib`_ はテキストベースのゲームを書きやすくするためのライブラリです(ただし、何でも自動的にやってくれるわけではありません!)。
 
-Writing text-based games requires a very different set of skills to writing
-graphical games. Adventurelib is pitched at a slightly more advanced level of
-Python programmer than Pygame Zero.
+テキストベースのゲームを作るにはグラフィカルなゲームとはまったく異なるスキルが必要です。
 
-Adventurelib cannot currently be combined with Pygame Zero.
+Adventurelib は Pygame Zero よろもやや高度なレベルの Python プログラマを対象としています。
 
+また Adventurelib は今のところ Pygame Zero と組み合わせて使うことはできません。
 
 .. _Adventurelib: https://adventurelib.readthedocs.io/
 
@@ -76,27 +58,19 @@ Adventurelib cannot currently be combined with Pygame Zero.
 Blue Dot
 --------
 
-`Blue Dot`_ allows you to control your Raspberry Pi projects wirelessly using
-an Android device as a Bluetooth remote.
+`Blue Dot`_ を使うと、Android デバイスを Bluetooth リモート・コントローラにして、Raspberry Pi プロジェクトをワイヤレスで制御できます。
 
-Blue Dot generally runs in its own thread, meaning that it will usually work
-very well with Pygame Zero.
+Blue Dot は通常、自身の独自のスレッドで動作するため、問題なく Pygame Zero と組み合わせて使うことができます。
 
-.. caution::
+.. 注意::
 
-    Avoid ``time.sleep()`` function calls, ``while True:`` loops and Blue Dot's
-    blocking ``wait_for_press`` and ``wait_for_release`` methods, as these will
-    stop Pygame Zero animating the screen or responding to input. Use
-    :ref:`clock` functions instead to call functions periodically, or the
-    :func:`update()` function to check a value every frame.
-
+    Pygame Zero と一緒に使う場合、 ``time.sleep()`` の呼び出し、 ``while True:`` ループや Blue Dot の  ``wait_for_press`` および ``wait_for_release`` の使用は避けてください。これらの処理は Pygame Zero のスクリーン・アニメーションや入力に対する応答処理などを止めてしまいます。関数を定期的に呼び出したいときは  :ref:`clock` を、フレーム毎に値のチェックをしたいときは :func:`update()` を使うようにしてください。
 
 .. _`Blue Dot`: https://bluedot.readthedocs.io/
 
 
-.. tip::
+.. ヒント::
 
-    Know of another library that belongs here?
+    ここに掲載した以外のライブラリをご存じですか？
 
-    `Open an issue <https://github.com/lordmauve/pgzero/issues/new>`_ on the
-    issue tracker to let us know!
+    もし知っていたらイシュートラッカーに `イシューを登録して <https://github.com/lordmauve/pgzero/issues/new>`_ 知らせてください。
