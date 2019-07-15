@@ -1,8 +1,7 @@
-Laptop Stickers
-===============
+ノートパソコン・ステッカー
+=======================
 
-`Sticker Mule`_ have graciously offered to provide a number of stickers for
-Pygame Zero users for free.
+うれしいことに `Sticker Mule`_ は Pygame Zero ユーザー向けにいくつものステッカーを提供してくれています。
 
 .. _`Sticker Mule`: https://www.stickermule.com/supports/opensource
 
@@ -12,47 +11,38 @@ Pygame Zero users for free.
     :align: center
     :target: https://www.stickermule.com/supports/opensource
 
-Laptop stickers are a great way to encourage students to continue tinkering and
-learning, as well as spreading the word about Pygame Zero.
+ノートパソコンのステッカーは Pygame Zero の宣伝になるだけではなく、生徒たちが Pygame Zero に触れ、学ぶことのモチベーションを上げる最適な方法です。
 
-The stickers should look a little like this (not to scale):
+ステッカーのデザインはこのようになっています(実物とはサイズが違います)。
 
 .. image:: _static/sticker-mockup.svg
     :align: center
 
 
-For learners
-------------
+学習者向け
+---------
 
-Due to the costs of distribution, and because Pygame Zero is a free community
-library, **we don't have a way of getting stickers directly to you yet.**
+Pygame Zero はコミュニティが無償で開発しているライブラリですが、ステッカーを配布するにはコストがかかります。このため残念ながら **ステッカーを直接みなさんにお届けする方法は今のところありません**
 
-It may be possible to obtain stickers at conferences and meet-ups. Please
-check back soon.
+ただしカンファレンスやミーティングなどでステッカーを入手できる機会があるかもしれません。
 
+教育者およびミーティング主催者向け
+------------------------------
 
-For educators/meet-ups
-----------------------
+ステッカーは主に教育者と教育目的の集会を通じて配布したいと考えています。
 
-We would like to distribute stickers primarily via educators and educational
-meet-ups. At this time it is not known how many stickers we will be able to
-distribute in this way (and it may be prohibitively expensive to ship them
-outside the UK).
+ただし現時点では何枚のステッカーを配布できるかまだ分かりません(またイギリス国外に郵送するには結構な費用がかかるかもしれません)。
 
-Please fill out our `Google Form`_ to express your interest.
+興味のある方は  `Google Form`_ で連絡をお願いします。
 
 .. _`Google Form`: https://goo.gl/forms/6uzS2lsASGUMdOV72
 
 
-For developers
---------------
+開発者向け
+---------
 
-Free stickers are primarily intended for learners. However, if a pull request
-you make to Pygame Zero or a translation is accepted, we would be very happy to
-give you a free laptop sticker if the opportunity arises.
+無償のステッカーは原則学習者たちを対象としています。ただしプルリクエストやドキュメントの翻訳がアクセプトされた人には、ステッカーを無償でお渡ししたいと思います。
 
-Please request a sticker in your Pull Request comments (or make yourself known
-at a conference/meet-up).
+プルリクエストのコメント欄にステッカーが欲しい旨を記載してください(またはカンファレンスやミーティングのときに知らせてください)。
 
-If you attend educational events or Python events regularly, and you would be
-willing to distribute stickers, this could also be useful. Please let us know.
+また教育イベントや Python イベントに定期的に参加していて、ステッカーを配布しても構わないと思っている方がいたら、ご連絡ください。
