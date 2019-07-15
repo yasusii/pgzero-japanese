@@ -1,83 +1,61 @@
-Principles of Pygame Zero
-=========================
+Pygame Zero の原則
+=================
+
+開発などにコントリビュートする前に以下の内容をよく読んでください。
+
+Pygame Zero は初心者を対象としているため、経験の少ないプログラマに不用なハードルを設けないよう細心の注意を払う必要があります。
 
 
-Please read the following carefully before contributing.
+.. _アクセシビリティ:
 
-Because Pygame Zero is aimed at beginners we must take extra care to avoid
-introducting hurdles for programmers who have not yet learned to deal with
-them.
+アクセシビリティの考慮
+-------------------
+
+Pygame Zero の主な目的は、初心者プログラマが簡単に使い始められるようにすることです。もちろん API の設計も例外ではありません。
+
+またハードウェア要件にもこの原則が当てはまります。 当初、Pygame Zero がキーボードとマウスだけしかサポートしていなかったのは、誰でも使えるようにするためです。
 
 
-.. _accessibility:
+保守的になろう
+------------
 
-Make it accessible
+Pygame Zero 開発の初期段階において、リチャードとわたし(ダニエル)はさまざまな機能について試行錯誤を繰り返しました。何か機能を加えて、それを試して、またそれを取り除いての繰り返しです。
+
+実験的すぎたり、混乱をもたらしかねない機能の追加は却下しなければなりません。
+
+この原則は OS のサポートにも当てはまります。たとえば異なる OS 間で互換性が保証されないファイル名は使えないようにしています。
+
+
+とにかく動くこと
+--------------
+
+Pygame Zero は Pygame をほぼ完全にラップしたものです。しかし Pygame のすべての機能にアクセスできるようにはしていません。余計な手間をかけず本当にうまく動く機能だけをアクセス可能にし、あまりうまく動かない、または追加の手順が必要となる一部の機能は Pygame Zero から見えないようにしています。
+
+
+実行時のコストを最小化する
+------------------------
+
+つまるところ、Pygame Zero はゲームのフレームワークですからパフォーマンスは問題となります。
+
+潜在的な落とし穴を塞ぐため、フレーム毎にコストの高いチェックを行うのは、現実には受け入れ難いことです。その代わり、起動時に確認、または例外が発生した場合にのみ確認して診断の詳細を出力するようにします。
+
+エラーを分かりやすく
 ------------------
 
-The main aim of Pygame Zero is to be accessible to beginner programmers.
-The design of the API is, of course, influenced by this.
-
-This also applies to things like hardware requirements: Pygame Zero chose
-originally to support only keyboard and mouse input, in order to be accessible
-to any user.
+Pygame Zero で例外が発生したときは、何が問題なのかを分かりやすく知らせるメッセージを出力しなければなりません。
 
 
-Be conservative
----------------
+ドキュメントを書く
+----------------
 
-Early in the development of Pygame Zero, Richard and I (Daniel) went backwards
-and forwards over various features. We put them in, tried them and took them
-out again.
+他のすべてのプロジェクト同様、Pygame Zero には良いドキュメントが必要です。必要なドキュメントを含むプルリクエストはアクセプトされる確率が高くなります。
 
-Features should be rejected if they are too experimental, or if they might
-cause confusion.
-
-This also applies to things like OS support: we disallow filenames that are
-not likely to be compatible across operating systems.
+複雑な文章や技術用語はできる限り用いないようにしてください。経験の少ないプログラマにも読みやすくするためです。
 
 
-Just Work
----------
+破壊的な変更は極力回避
+-------------------
 
-Pygame Zero wraps Pygame almost completely - but we don't expose all the
-features. We expose only the features that work really well without extra fuss,
-and hide some of the other features that work less well or need extra steps.
+教育環境においては、使用するライブラリのバージョンを自由に選べないこともあります。最新バージョンのインストールやアップグレードの方法が分からないこともあります。
 
-
-Minimise runtime cost
----------------------
-
-At the end of the day, Pygame Zero is a games framework and performance is an
-issue.
-
-Doing expensive checking every frame to catch a potential pitfall is not really
-acceptable. Instead, we might check at start up time, or check only when an
-exception is raised to diagnose it and report more information.
-
-
-Error clearly
--------------
-
-When exceptions are thrown by Pygame Zero, they should have clear error
-messages that explain the problem.
-
-
-Document well
--------------
-
-Like all projects, Pygame Zero needs good documentation. Pull requests are more
-likely to be accepted if they include the necessary documentation.
-
-Try to avoid complicated sentences and technical terms in the documentation, so
-that it is more easily readable by inexperienced programmers.
-
-
-Minimise breaking changes
--------------------------
-
-In educational environments, users don't always have control of the version of
-a library they use. They don't know how to install or upgrade to the latest
-version.
-
-It is more important to get the features right first time than in many other
-projects.
+このため、一番最初に正しく機能を設計することが、他の多くのプロジェクトよりも重要です。
