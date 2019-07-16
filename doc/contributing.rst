@@ -1,156 +1,121 @@
-Contributing to Pygame Zero
-===========================
+Pygame Zero へのコントリビュート
+==============================
 
 .. highlight:: none
 
-The Pygame Zero project is hosted on GitHub:
+Pygame Zero プロジェクトは GitHub でホストされています。
 
     https://github.com/lordmauve/pgzero
 
 .. _report-issue:
 
-Reporting an bug or request
----------------------------
+バグ報告や要望を送る
+------------------
 
-You can report bugs, or request features that you think should be in Pygame
-Zero, using the `Github issue tracker`_.
+Pygame Zero のバグ報告や機能の要望は  `Github issue tracker`_ から送ってください。
 
-Here are some things to bear in mind before you do this:
+バグ報告などを行う前に留意すべき事項は以下の通りです。
 
-* It might not just be you! You should check if someone has already reported
-  the issue by searching through the existing issues - both open and closed.
-
-* The developers need to know what version of Pygame Zero you are using, and
-  what operating system you are running (Windows, Mac, Linux etc) and version
-  (Windows 10, Ubuntu 16.04, etc).
-
+* ほかの人も同じことをしている可能性があります。既存のイシューを検索して(open か closed)に関わらず)ほかの人が既にイシューを登録していないか確認してください。
+* 開発者はどのバージョンの Pygame Zero を使っているのか、動かしている OS ((Windows, Mac, Linux 等) とそのバージョン(Windows 10, Ubuntu 16.04 等)を知る必要があります。
 
 .. _`Github issue tracker`: https://github.com/lordmauve/pgzero/issues
 
 
-How to do a pull request
-------------------------
+プルリクエストの作成方法
+---------------------
 
-You can make changes to Pygame Zero by creating a pull request.
+プルリクエストを作成することで、Pygame Zero を変更することができます。
 
-It's a good idea to :ref:`report an issue <report-issue>` first, so that we can
-discuss whether your change makes sense.
+まず最初に :ref:`イシューを報告 <report-issue>` するのが良い方法です。そうすることで変更内容が意味のあるものかどうかを議論することができます。
 
-Github has `help on how to create a pull request`__, but here's the quick
-version:
+Github には `プルリクエストの作成方法に関するヘルプ`__ もありますが、ここにその簡易バージョンを記載します。
 
 .. __: https://help.github.com/articles/creating-a-pull-request/
 
-1. Make sure you are logged into Github.
-2. Go to the `Github page for Pygame Zero`_.
-3. Click "Fork" to create your own fork of the repository.
-4. Clone this fork to your own computer::
+1. Github にログインしていること確認してください。
+2. `Pygame Zero の Github ページ`_ へ行きます。
+3. "Fork" ボタンをクリックして自分用にリポジトリの fork を作成します。
+4. この fork を自分のコンピュータに fork します ::
 
         git clone git@github.com:yourusername/pgzero.git
 
-   Remember to change ``yourusername`` to your Github username.
+   ``yourusername`` は自分の Github ユーザー名に置き換えることを忘れないでください。
 
-5. Create a branch in which to do your changes. Pick a branch name that
-   describes the change you want to make. ::
+5. 変更を行うためのブランチを作成します。ブランチ名は変更内容を反映したものにしてください  ::
 
         git checkout -b my-new-branch master
 
-6. Make the changes you want.
-7. Add the files that you want to commit::
+6. コードの変更を行います。
+7. commit するファイルを add します ::
 
         git add pgzero
 
-8. Commit the files with a clear commit message::
+8. 完結なコミット・メッセージを付けてファイルを commit します ::
 
         git commit -m "Fixed issue #42 by renaming parameters"
 
-   You can do steps 6 to 8 as many times as you want until you're happy.
+   6 から 8 までのステップを必要なだけ繰り返します。
 
-9. Push the commit back to your fork. ::
+9. 先に fork したリポジトリに commit 内容を push します ::
 
         git push --set-upstream origin my-new-branch
 
-10. Go to the Github page for your fork, and click on the "Create pull request"
-    button.
+10. fork の Github ページへ行き、"Create pull request" ボタンをクリックします。
 
 
-.. _`Github page for Pygame Zero`: https://github.com/lordmauve/pgzero
+.. _`Pygame Zero の Github ページ`: https://github.com/lordmauve/pgzero
 
 
-Development installation
-------------------------
+開発用のインストール
+------------------
 
-It's possible to create a locally-editable install using pip. From the root directory of the checked out source, run::
+pip を使ってローカルに編集可能なインストールを行うことができます。チェックアウトしたソースのルートへ移動し、以下を実行してください ::
 
     pip3 install --editable .
 
-The installed version will now reflect any local changes you make.
+これでインストールしたバージョンにはローカルの変更内容がすべて反映されるようになります。
 
-Alternatively, if you don't want to install it at all, it may be run with:
+別の方法として、何もインストールしたくない場合は次のようにすれば実行可能です ::
 
-   python3 -m pgzero <name of pgzero script>
+   python3 -m pgzero <pgzero のスクリプト名>
 
-For example:
+例::
 
    python3 -m pgzero examples/basic/demo1.py
 
 
-How to run tests
-----------------
+テストの実行方法
+--------------
 
-The tests can be run with
+テストは次のようにすれば実行されます ::
 
     python3 setup.py test
 
 
 .. _translating:
 
-Helping to translate the documentation
---------------------------------------
+ドキュメント翻訳の手助け
+---------------------
 
-Pygame Zero's APIs will always be English, but we can bring Pygame Zero to more
-users around the world if the documentation is available in their language.
+Pygame Zero の API 自体は英語ですが、ドキュメントが世界各地域の言語に翻訳されていれば、もっと多くの人たちに Pygame Zero を使ってもらえます。
 
-If you are fluent in another language, please consider contributing by
-translating all or part of the documentation.
+もしあなたが他の言語に堪能なら、ドキュメントのすべて、あるいは一部を翻訳してコントリビュートすることを、ぜひ検討してください。
 
-The documentation is written in reStructuredText_, which is a text-based markup
-language for technical documentation. As much as possible, the existing
-formatting should be preserved. reStructuredText isn't too difficult once you
-get used to it.
+ドキュメントは技術文書用のテキストベースのマークアップ言語  reStructuredText_ で書かれています。翻訳の際は元のドキュメントのフォーマットをできる限りそのまま生かすようにしてください。reStructuredText は慣れてしまえばさほど難しいものではありません。
 
-Creating a translation is done by creating a separate repository on Github with
-a copy of the documentation, rewritten (at least in part) into the language you
-would like to support. One advantage of this is that you can work on
-translations at your own pace, without having to submit pull requests back to
-the ``pgzero`` project itself. Please see the `translation guide`_ on Read The
-Docs for details.
+ドキュメントの翻訳版を作成するには、まず Github 上にドキュメントのコピーを作成し、(少なくとも一部を)あなたがサポートしたい他の言語に書き換えてください。この方法のメリットは ``pgzero`` プロジェクト本体にプルリクエストを送る必要がなく、あなたが自分のペースで作業を進められることです。詳しい内容については Read The Docs の `translation guide`_ を参照してください。
 
-If this sounds like something you could tackle, here's how you might go about
-it:
+もしやってみようかなと感じたら、以下の内容に従って始めてください。
 
-1. First, open an issue on the `pgzero issue tracker`_. You should search for
-   an existing issue covering the translation you want to do, before opening a
-   new one. This will help ensure that you don't do translation work that has
-   already been done by someone else (perhaps you can collaborate instead).
-2. Create a new Github repository under your user, called pgzero-*language*,
-   eg. ``pgzero-spanish`` if you're going to translate into Spanish.
-3. Clone the repository to your own computer.
-4. Download the Pygame Zero ``doc/`` directory and commit it in your project.
-   You can do this by extracting them from `repository ZIP file`_. You only
-   need the ``doc/`` directory from the ZIP file. You can delete the other
-   files.
-5. Now, work through the .rst files in the docs directory, translating, using
-   your preferred editor. You should commit regularly, and push your commits to
-   Github.
-6. Post a link to your repository as a comment in the Github issue you created
-   in step 1. You can do this as soon as you have some progress to show; this
-   will help people collaborate with you on the translation if they are
-   interested.
-7. `Set up the documentation to build on Read The Docs`__. Again, post a
-   comment on the Github issue when you have this working.
-8. We can then link up the new, translated documentation with the Pygame Zero
-   documentation.
+1. まず  `pgzero issue tracker`_ で翻訳開始のイシューをオープンします。その前に、既に誰かが翻訳のイシューを登録していないか、検索して確認してください。そうすることで誰かが既に始めている翻訳作業との重複を防げます(代わりに共同して作業を進めることができます)。
+2. 自分自身の新しい Github リポジトリを pgzero-*language* という名前で作詞します。例: スペイン語への翻訳なら  ``pgzero-spanish`` です。
+3. リポジトリを自分のコンピュータ上に clone します。
+4. Pygame Zero の ``doc/`` ディレクトリをダウンロードして、自分のプロジェクトへ commit します。 `repository ZIP file`_ を展開するだけで OK です。余計なファイルは削除してください。
+5. ここまで準備ができたら、docs ディレクトの下にある .rst ファイルを自分の好きなエディタを使って翻訳していきます。でき上がったものは順次 commit、Github に push していきます。
+6. ステップ 1 で作成したイシューのコメントとして、リポジトリへのリンクをポストしてください。ある程度進んだら、すぐにこれを行なってください。そうすれば、興味を持った人が翻訳に協力しやすくなります。
+7. `Set up the documentation to build on Read The Docs`__ に従いドキュメントを Read The Docs にセットしてアクセスできるようになったら、再びその旨を Github のイシューにコメントしてください。
+8. 最後にわたしたちが、Pygame Zero のドキュメントに新たな翻訳版へのリンクを追加します。
 
 .. _reStructuredText: http://www.sphinx-doc.org/en/master/rest.html
 .. _`translation guide`: https://docs.readthedocs.io/en/latest
@@ -160,7 +125,4 @@ it:
 
 .. __: https://docs.readthedocs.io/en/latest/getting_started.html#import-your-docs
 
-Note that Pygame Zero will have updates, and the documentation will be changed
-accordingly. Using Git it is possible to see a diff of what changed in the
-English documentation, so that you can make corresponding changes in the
-translated documentation.
+注意 Pygame Zero は随時アップデートされ、それに連れてドキュメントも変更されます。git を使って英語版の変更部分の diff を確認できますから、対応する部分の翻訳を修正してください。
