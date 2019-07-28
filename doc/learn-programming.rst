@@ -1,68 +1,55 @@
-Learn programming with Pygame Zero
-==================================
+Pygame Zero で始めるプログラミング入門
+===================================
 
-Let's start at the beginning. This tutorial is for those with no programming
-experience whatsoever. We're going to learn to make a simple but perhaps fun
-game.
+では始めましょう。この入門はプログラミング経験の無い初心者が対象です。シンプルだけどおもしろいゲームを作っていきます。
 
-I'm going to assume Pygame Zero is installed already and you know how to use
-a text editor.
+Pygame Zero は既にインストールしてあり、テキストエディタは使えるものとして話を進めていきます。
 
-Creating a blank file
-=====================
+空っぽのファイルを作る
+===================
 
-First, create an empty file called "fishfrenzy.py" by creating a new, empty
-file in your editor and saving it as "fishfrenzy.py" in a new directory.
 
-Verify that this runs and creates a blank window by running ::
+まず新しいディレクトリを作成し、エディタで fishfrenzy.py という名前の中身は空のファイルを新規に作ります。そのまま何も入力せずに、そのディレクトリの中にfishfrenzy.py という名前で保存してください。
+
+次のようにコマンドを実行して、黒いウィンドウが表示されることを確認してください(the_directory_you_created の部分にはファイルを保存したディレクトリ名を入力します) ::
 
     cd the_directory_you_created
     pgzrun fishfrenzy.py
 
-How you run this may depend on your editor, shell, or loads of other things.
+実行の方法は使っているエディタやシェル、そのほか色々な条件によって違ってきます。
 
-If this step failed, then you may be in the wrong directory, or Python or
-Pygame Zero may not be installed correctly - or hundreds of other things. In
-many ways this is the hardest step, because it's beyond the scope of this
-tutorial to explain things, given how many different configurations there are:
-what operating system you are running, what version of Python, what version of
-Pygame Zero.
+実行に失敗するときは、指定したディレクトリを間違えている、あるいは Python や
+Pygame Zero が正しくインストールされていないなど様々な原因が考えられます。色々な意味でここが最も難しいステップなのです。どの OS を使っているのか、どのバージョンの Python を使っているのか、どのバージョンの Pygame Zero を使っているのかなど、様々な構成があることを考えると、この入門で扱える範囲を越えてしまうのです。
 
-But with any luck you can get it to work! If you see a blank "Pygame Zero Game"
-window, we're good to move on.
+しかし、運が良ければ問題なく動作させることができます。黒い Pygame Zero Game ウィンドウが表示されたら、さらに先に進みましょう。
 
-Really stuck?
--------------
+困ったときは
+-----------
 
-You can get into a support chat room by going to
+チャットの初心者向けチャンネルで助けを求めてみましょう。詳しくは以下のページを読んでください。
 
-http://webchat.freenode.net?randomnick=1&channels=%23%23learnpython&uio=d4
+https://www.python.jp/pages/pythonjp_discord.html
 
-Functions
-=========
+関数
+====
 
-Let's begin for real.
+では実際にプログラミングを始めましょう。
 
-In most programming languages we program by defining a series of steps that the
-computer will carry out for us, like a **recipe**. In bakery, you might have
-a recipe like:
+ほとんどのプログラミング言語は、**料理のレシピ** のように、コンピュータが実行する一連の手順を定義することでプログラミングします。たとえばケーキ屋さんなら、次のようなレシピがあるかもしれません。
 
-    **Cake Recipe**
+    **ケーキのレシピ**
 
-    * Add flour to the bowl
-    * Add sugar to the bowl
-    * Add butter to the bowl
-    * Add an egg to the bowl
-    * Whisk the ingredients
-    * Pour into a cake tin
-    * Bake it
+    * ボウルに小麦粉を入れる
+    * ボウルに砂糖を入れる
+    * ボウルにバターを入れる
+    * ボウルに卵を入れる
+    * ボウルに入れた材料を泡立て器でかきまぜる
+    * それをケーキの焼き型に入れる
+    * オーブンで焼く
 
-... and so on. (Don't try this recipe. I am not a chef.)
+... と、こんな感じです(このレシピはそのまま試さないように。ぼくはケーキのことよく知らないので)
 
-A game among programmers is to imagine how this would look as a program in an
-imaginary computer that understood whatever instructions you could name (this
-is called **pseudocode** - because it looks like code, but it doesn't actually
-work). If we translated this recipe into Python, it would look like this::
+プログラマは手順を定義する場合、どんなプログラムになるかをイメージし、嘘の命令を使ってコードを書くことがあります(これを **疑似コード** といいます。プログラムのコードに見えても、実際には動かないためです)。もしケーキのレシピを Python の疑似コードで書くとすれば、次のようなものになるでしょう ::
 
     def cake_recipe():
         bowl.add(flour)
@@ -73,63 +60,51 @@ work). If we translated this recipe into Python, it would look like this::
         cake_tin.add(bowl.get_contents())
         bake(cake_tin)
 
-That's pretty similar, isn't it? We've had to spell the names of some of the
-words differently, but basically, each line of the program is equivalent to one
-line of the recipe - one "action".
+ケーキのレシピに似てますよね？普通の文章とコードの違いはありますが、基本的にはレシピの1行がコードの1行で行う処理にそれぞれ対応しています。
 
-The top line with ``def`` is defining a recipe called ``cake_recipe``, and all
-of the other lines are steps in the recipe. And in fact - because they all use
-parentheses - they refer to other recipes that the computer might know.
+1行目の ``def`` が書かれている行で  ``cake_recipe`` というレシピを定義、その後の行でレシピの各手順を記述しています。また手順の各行に括弧が付いているのは(まだ定義されていない)別のレシピの呼び出しを意味しています。
 
-So, let's write a real recipe in Pygame Zero. In your editor, let's write a
-``draw`` recipe. Pygame Zero knows how to call a function called ``draw``::
+では Pygame Zero を使って実際にレシピを書いてみましょう。エディタを開いて、
+``draw`` レシピを書きます。 Pygame Zero は自動的に関数 ``draw`` を呼び出してくれます ::
 
     def draw():
         screen.clear()
         screen.draw.circle((400, 300), 30, (255, 255, 255))
 
-Run it with::
+次のようにコマンドを入力して実行します ::
 
     pgzrun fishfrenzy.py
 
-Did it work? Do you see the circle? On my screen it looks like this:
+ちゃんと動きましたか？円が表示されたでしょうか？スクリーンには次のように表示されるはずです。
 
 .. image:: _static/grabs/circle.png
 
-If Pygame Zero didn't show a window, or showed a window that disappeared
-straight away, look at the error message it displayed:
+もし Pygame Zero がウィンドウを表示しなかったり、ウィンドウが開いてもすぐに消えてしまうときは、表示されたエラーメッセージを確認しましょう。
 
-* ``SyntaxError`` - Probably means you are missing a parenthesis or your
-  indentation doesn't match mine. Note how each step of the function has to be
-  aligned with each other, but indented **more** than the ``def`` at the top.
-* ``AttributeError`` or ``NameError`` - You probably mispelled something.
-* ``TypeError`` - did you put some of the parentheses in the wrong places?
+* ``SyntaxError`` (文法エラー) - 括弧を閉じ忘れていたり、正しくインデントされていないときなどにこのエラーが出ます。関数内各行のインデントはすべて揃っていなければならず、先頭の  ``def``  よりも深くインデントになっている必要があります。
+* ``AttributeError`` (属性エラー) または ``NameError``(名前エラー) - おそらくどこかタイプミスをしています。
+* ``TypeError`` (型エラー) - 括弧を間違った場所に付けていませんか？
 
-If the window appears, but nothing happens, did you misspell "draw"? Or any of
-the numbers?
+ウィンドウは開いても何も表示されないならば、"draw" の綴りや数字部分の入力を間違えていないか確認しましょう。
 
-Check carefully if it doesn't work first time and you should be able to get it
-to work after a few attempts.
+最初、動かなくても少しがんばって調べればうまくいくはずです。
 
-So we created a recipe that includes two steps:
+ここで作成したレシピには次の二つの手順が記載されています。
 
-1. Clear the screen to black
-2. Draw a circle on the screen:
+1. スクリーンを何も無い状態にクリアする
+2. スクリーンに円を描画する
 
-    * At the middle ``(400, 300)``. These are coordinates for the center of the
-      circle, in pixels from the left then pixels from the top.
-    * Of radius ``30`` pixels.
-    * And draw it in white, which is written as three numbers, red, green and
-      blue: ``(255, 255, 255)``. White is an equal mix of red, green and blue,
-      and ``255`` is the most you can have.
+    * 行の中ほどに書かれた  ``(400, 300)`` 、これは円の中心の座標で、それぞれ左端からのピクセル数、上端からのピクセル数になります。
+    * 続く ``30`` は半径のピクセル数です。
+    * そして最後の ``(255, 255, 255)`` は表示色の白を意味します。これは三つの数値でそれそれ赤、緑、青を指定しています。赤、緑、青をすべて、指定できる最大の値  ``255`` にしたときの色が白になります。
 
-You can play with all of these numbers.
+数値を変更することで円の位置、大きさや色を変えることができます。
 
 
-Diversion: Local and Global Variables
+ワンポイント: ローカル変数とグローバル変数
 -------------------------------------
 
-Suppose we wrote the following code::
+次のようなコードがあったとします ::
 
     RED = 150, 0, 0
     GREEN = 0, 128, 0
@@ -145,21 +120,16 @@ Suppose we wrote the following code::
     def on_mouse_up():
         bg = RED
 
-In some languages, this would work: the screen would change to green
-when the mouse button was pressed, and change back to red when the button is
-released.
 
-This code doesn't work in Python. If you try it, you will not see the screen
-change to green. Why?
+マウスのボタンを押すとスクリーンが緑に変わり、ボタンを離すと赤に戻るように意図したコードです。ほかのプログラミング言語なら、このような書き方をしても意図の通り動くものがあります。
 
-When you assign with the ``=`` operator inside a function, as at line 10 (and
-line 13), you create a "local" variable called ``bg`` that exists only with the
-function. The ``bg`` we want to change is in the global scope. It's actually
-a very sensible feature; you don't want to
+しかし Python では意図したようには動きません。試してみると分かりますが、ボタンを押してもスクリーンは緑に変わりません。なぜでしょう？
 
-The fix is to declare in ``on_mouse_down()`` and ``on_mouse_up()`` that we
-want to modify the global variable, not create a new local variable. We do
-this with the ``global`` statement. The correct code in Pygame Zero is::
+10行目から13行目の部分、関数の中で ``=`` を使って代入をしているのですが、ここで作成している ``bg`` は関数の中でのみ有効なローカル変数です。一方、本当に変更したい方の ``bg`` はグローバル変数になっています。実のところ、ちゃんとした理由があってこの区別がされているのですが、最初は分かりにくく感じるかもしれません。
+
+ちゃんと動くようにするには、 ``on_mouse_down()`` と ``on_mouse_up()`` の中で
+ローカル変数ではなく、グローバル変数を使うようにします。そのためには
+``global`` 宣言文を使用します。正しい Pygame Zero コードは次のようになります ::
 
     RED = 150, 0, 0
     GREEN = 0, 128, 0
