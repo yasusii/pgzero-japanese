@@ -1,41 +1,34 @@
-Using the REPL (Read-Evaluate-Print Loop)
-=========================================
+REPL (Read-Evaluate-Print Loop) の使い方
+=======================================
 
-The REPL allows you to interact with a running Pygame Zero game using Python
-commands. As you type it will offer suggestions based on variables that exist
-in your program. This can be useful for debugging your game or tuning how difficult it is.
+REPL を使うと、Pygame Zero ゲームを実行しながら Python コマンドで対話的な操作が可能になります。コマンドをタイプすることにより、プログラム中の変数に基づく情報を得ることができます。この機能はやっかいなデバッグやゲーム・チューニング作業をするときに役立ちます。
 
 .. image:: _static/repl.png
 
-REPL is short for a Read-Evaluate-Print Loop; it means:
+REPL Read-Evaluate-Print Loop を略した名前です。その意味は
 
-1. **Read** a line of code typed by you
-2. **Evaluate** the code
-3. **Print** the result
-4. **Loop** back to step 1!
+1. **Read (読み取り)** キーボードから入力した内容を読み取ります
+2. **Evaluate (評価)** その内容をコードとして評価します
+3. **Print (出力)** 評価した結果を出力します
+4. **Loop (ループ)** ループバックして1に戻ります
 
-This is an *optional feature* that may need to :ref:`be installed
-<install-repl>` if it was not originally installed with Pygame Zero. If you try
-using the REPL, Pygame Zero will let you know if it is not installed.
+これは Pygame Zero の *オプション機能* です。もしまだインストールされていなければ、 :ref:`<install-repl> でインストールする必要があります` 。実際に REPL を試してみて、もしインストールれていなければ Pygame Zero はメッセージを表示して教えてくれます。
 
-
-Running a Pygame Zero program with the REPL
+REPL を使って Pygame Zero のプログラムを動かす
 -------------------------------------------
 
-If you normally run your Pygame Zero program using the terminal, add ``--repl``
-to the command line when running ``pgzrun``. For example, if your game is in
-a file called ``mygame.py``, run::
+Pygame Zero プログラムをターミナルからコマンドを使って起動する際、
+``pgzrun`` に  ``--repl`` オプションを付けてください。たとえばゲーム・プログラムのファイル名が  ``mygame.py`` だとしたら、次のように入力します。 ::
 
     pgzrun --repl mygame.py
 
 
-Using the REPL
---------------
+REPL の使い方
+------------
 
-Python code that you type at the REPL is evaluated as if you had typed it into
-your game file.
+REPL で入力する Python コードは、まるでそれが最初からゲーム・プログラムの中に入力されていたかのように評価されます。
 
-For example, if your game file contains the code ::
+たとえばゲーム・プログラムが次のように書かれていたとします ::
 
     alien = Actor('alien', pos=(54, 60))
 
@@ -43,12 +36,12 @@ For example, if your game file contains the code ::
         screen.clear()
         alien.draw()
 
+起動したら REPL で  ``alien`` と入力して alien オブジェクトの内容を見てみましょう ::
 
-Then at the REPL you could type ``alien`` to see the alien object::
 
     >>> alien
     <Actor 'alien' pos=(54, 60)>
 
-You can set attributes on the ``alien`` object and see it move::
+``alien`` オブジェクトの属性に値をセットして、その動きを確認することもできます ::
 
     >>> alien.x = 90
