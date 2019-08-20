@@ -1,8 +1,7 @@
-Text Formatting
----------------
+テキストの書式整形
+----------------
 
-The :ref:`screen`'s ``draw.text()`` method has a very rich set of methods for
-position and formatting of text. Some examples::
+:ref:`screen` の ``draw.text()`` メソッドはテキストの表示位置や書式をできる様々なオプションを備えています。以下はそのサンプルです ::
 
     screen.draw.text("Text color", (50, 30), color="orange")
     screen.draw.text("Font name and size", (20, 100), fontname="boogaloo", fontsize=60)
@@ -17,65 +16,51 @@ position and formatting of text. Some examples::
         midbottom=(427,460), width=360, fontname="boogaloo", fontsize=48,
         color="#AAFF00", gcolor="#66AA00", owidth=1.5, ocolor="black", alpha=0.8)
 
-In its simplest usage, ``screen.draw.text`` requires the string you want to
-draw, and the position. You can either do this by passing coordinates as the
-second argument (which is the top left of where the text will appear), or use
-the positioning keyword arguments (described later)::
+基本的な使い方は簡単です。 ``screen.draw.text`` に表示したいテキストとその位置を指定するだけです。位置は2番目の引数として(テキストの左上隅の)座標で指定します。そのほか後述するキーワードを使った指定も可能です ::
 
     screen.draw.text("hello world", (20, 100))
 
-``screen.draw.text`` takes many optional keyword arguments, described below.
+``screen.draw.text`` には次のように様々なオプションのキーワード引数も指定できます。
 
-Font name and size
-''''''''''''''''''
+フォント名とサイズ
+''''''''''''''''
 
-Fonts are loaded from a directory named ``fonts``, in a similar way to the
-handling of images and sounds. Fonts must be in ``.ttf`` format. For example::
+フォントは  ``fonts`` という名前のディレクトリからロードされます。これは images や sounds と同様の仕組みです。なおサポートしているフォントの形式は  ``.ttf`` です。たとえばこのように指定します ::
 
     screen.draw.text("hello world", (100, 100), fontname="Viga", fontsize=32)
 
-Keyword arguments:
+-  ``fontname``: 表示に使うフォント・ファイルの名前です。特に指定の無いときは、デフォルトでシステム・フォントを使用します。
+-  ``fontsize``: フォントのサイズをピクセル数で指定します。デフォルトは24ピクセルです。
+-  ``antialias``: アンチエイリアスを使用するかどうかの指定です。デフォルトは ``True`` で使用します。
 
--  ``fontname``: filename of the font to draw. By default, use the system font.
--  ``fontsize``: size of the font to use, in pixels. Defaults to ``24``.
--  ``antialias``: whether to render with antialiasing. Defaults to ``True``.
-
-Color and background color
-''''''''''''''''''''''''''
+色と背景色
+'''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), color=(200, 200, 200), background="gray")
 
-Keyword arguments:
+キーワード引数は次の通りです。
 
--  ``color``: foreground color to use. Defaults to ``white``.
--  ``background``: background color to use. Defaults to ``None``.
+-  ``color``: 文字の色を指定します。デフォルトは ``white`` です。
+-  ``background``: 文字の背景色を_指定します。デフォルトは ``None`` で「無し」です。
 
-``color`` (as well as ``background``, ``ocolor``, ``scolor``, and
-``gcolor``) can be an (r, g, b) sequence such as ``(255,127,0)``, a
-``pygame.Color`` object, a color name such as ``"orange"``, an HTML hex
-color string such as ``"#FF7F00"``, or a string representing a hex color
-number such as ``"0xFF7F00"``.
+``color`` (そのほか ``background`` 、 ``ocolor`` 、 ``scolor``, ``gcolor`` なども)色は (赤, 緑, 青) のシーケンス、たとえば ``(255,127,0)`` のように指定します。そのほか
+``"orange"`` のような ``pygame.Color`` オブジェクトのカラー名、 ``"#FF7F00"`` のような HTML の16進数文字列、または  ``"0xFF7F00"`` のような16進数文字列を使っての指定も可能です。
 
-``background`` can also be ``None``, in which case the background is
-transparent. Unlike ``pygame.font.Font.render``, it's generally not more
-efficient to set a background color when calling ``screen.draw.text``. So only
-specify a background color if you actually want one.
+``background`` には ``None`` を指定することもでき、その場合背景は透明になります。``pygame.font.Font.render`` とは違い、  ``screen.draw.text`` を呼び出すたびに背景色を指定するのは効率が良くありません。実際に必要な場合だけ背景色を指定するようにしてください。
 
-Colors with alpha transparency are not supported (except for the special
-case of invisible text with outlines or drop shadows - see below). See
-the ``alpha`` keyword argument for transparency.
+色の透明度をアルファ値で指定する方法はサポートされていません(ただしアウトラインまたはドロップシャドウを持つ見えないテキストは例外です。これは後で解説します)。透明度についてはキーワード引数 ``alpha`` の項を読んでください。
 
-Positioning
-'''''''''''
+位置指定
+'''''''
 
 ::
 
     screen.draw.text("hello world", centery=50, right=300)
     screen.draw.text("hello world", midtop=(400, 0))
 
-Keyword arguments:
+使用できるキーワード引数は次の通りです。
 
 ::
 
@@ -84,210 +69,157 @@ Keyword arguments:
     midtop midleft midbottom midright
     center centerx centery
 
-Positioning keyword arguments behave like the corresponding properties
-of ``pygame.Rect``. Either specify two arguments, corresponding to the
-horizontal and vertical positions of the box, or a single argument that
-specifies both.
+位置指定のキーワード引数の使い方は  ``pygame.Rect`` の位置指定プロパティと同様です。ボックスの横の位置と縦の位置に対応する2つの引数を指定するか、または両方の指定を単一の引数で渡します。
 
-If the position is overspecified (e.g. both ``left`` and ``right`` are
-given), then extra specifications will be (arbitrarily but
-deterministically) discarded. For constrained text, see the section on
-``screen.draw.textbox`` below.
+位置が過剰に指定されている(たとえば、 ``left`` と ``right`` の両方が指定されている)場合、余分な指定は(任意に、しかし決定論的に)無効にされます。「制約付きテキスト」については、後述の ``screen.draw.textbox`` を参照してください。
 
-Word wrap
-'''''''''
+
+ワードラップ
+'''''''''''
 
 ::
 
     screen.draw.text("splitting\nlines", (100, 100))
     screen.draw.text("splitting lines", (100, 100), width=60)
 
-Keyword arguments:
+キーワード引数は以下の通りです。
 
--  ``width``: maximum width of the text to draw, in pixels. Defaults to
-   ``None``.
--  ``widthem``: maximum width of the text to draw, in font-based em
-   units. Defaults to ``None``.
--  ``lineheight``: vertical spacing between lines, in units of the
-   font's default line height. Defaults to ``1.0``.
+-  ``width``: テキスト表示に使う最大幅をピクセル数で指定します。デフォルトは ``None`` です。
+-  ``widthem``: テキスト表示に使う最大幅をフォントの em で指定します。デフォルト ``None`` です。
 
-``screen.draw.text`` will always wrap lines at newline (``\n``) characters. If
-``width`` or ``widthem`` is set, it will also try to wrap lines in order
-to keep each line shorter than the given width. The text is not
-guaranteed to be within the given width, because wrapping only occurs at
-space characters, so if a single word is too long to fit on a line, it
-will not be broken up. Outline and drop shadow are also not accounted
-for, so they may extend beyond the given width.
+-  ``lineheight``: 行の間隔をフォントのデフォルトの行間を単位に指定します。
+   デフォルトは ``1.0`` です。
 
-You can prevent wrapping on a particular space with non-breaking space
-characters (``\u00A0``).
+``screen.draw.text`` は改行文字 ``\n`` で常に改行します。 ``width`` や
+``widthem`` が指定されている場合は、どの行もその幅を越えないように折り返そうとします。しかしすべての行のテキストが必ず指定された幅に収まるとは限りません。折り返しは空白文字のところでしかできないためです。ですから、空白を含まない長い単語があると、折り返せなくなってしまいます。アウトラインとドロップシャドウも考慮されないため、指定の幅を越えて表示される可能性があります。
 
-Text alignment
-''''''''''''''
+スペースでの折り返しを抑制したいときはノーブレークスペース(``\u00A0``)を使っ
+てください。
+
+テキスト・アライメント
+'''''''''''''''''''
 
 ::
 
     screen.draw.text("hello\nworld", bottomright=(500, 400), align="left")
 
-Keyword argument:
+キーワード引数は以下の通りです。
 
--  ``align``: horizontal positioning of lines with respect to each
-   other. Defaults to ``None``.
+-  ``align``: 行がお互いに配置される水平位置を指定します。デフォルトは ``None`` です。
 
-``align`` determines how lines are positioned horizontally with respect
-to each other, when more than one line is drawn. Valid values for
-``align`` are the strings ``"left"``, ``"center"``, or ``"right"``, a
-numerical value between ``0.0`` (for left alignment) and ``1.0`` (for
-right alignment), or ``None``.
+``align`` は複数の行を表示する際の、お互いの行が配置される水平位置を決定します。指定できる値は文字列 ``"left"``, ``"center"``, または ``"right"`` です。数値を使って  ``0.0`` (左寄せ) から  ``1.0`` までの値を指定することもできます。さらに ``None`` も指定できます。
 
-If ``align`` is ``None``, the alignment is determined based on other arguments,
-in a way that should be what you want most of the time. It depends on any
-positioning arguments (``topleft``, ``centerx``, etc.), ``anchor``, and finally
-defaults to ``"left"``. I suggest you generally trust the default alignment,
-and only specify ``align`` if something doesn't look right.
+``align`` に  ``None`` を指定した場合の水平位置は、他の引数の内容に左右されます。位置指定の引数(``topleft``, ``centerx`` など)、 ``anchor`` の設定に影響を受け、最終的なデフォルトは ``"left"`` となります。
 
-Outline
-'''''''
+通常はデフォルトの配置を使い、どうしてもバランスが悪く見えてしまうときにだけ
+``align`` を使うことをお勧めします。
+
+アウトライン(文字の縁取り)
+'''''''''''''''''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), owidth=1, ocolor="blue")
 
-Keyword arguments:
+キーワード引数は以下の通りです。
 
--  ``owidth``: outline thickness, in outline units. Defaults to
-   ``None``.
--  ``ocolor``: outline color. Defaults to ``"black"``.
+-  ``owidth``: 文字のアウトラインの太さを指定します。デフォルトは ``None`` です。
+-  ``ocolor``: アウトラインの色を指定します。デフォルトは ``"black"`` です。
 
-The text will be outlined if ``owidth`` is specified. The outlining is a
-crude manual method, and will probably look bad at large sizes. The
-units of ``owidth`` are chosen so that ``1.0`` is a good typical value
-for outlines. Specifically, they're the font size divided by 24.
+``owidth`` を指定すると文字にアウトラインが付きます。アウトライン処理はあまり細かに行われないため、文字サイズを大きくするとおそらく見た目が悪くなります。
+``owidth`` の値は 1.0 としたときにちょうどよく表示されるようになっています。フォントサイズを 24 で割った値がその単位です。
 
-As a special case, setting ``color`` to a transparent value (e.g.
-``(0,0,0,0)``) while using outilnes will cause the text to be invisible,
-giving a hollow outline. (This feature is not compatible with
-``gcolor``.)
+特別なケースとして、アウトラインを使用する際、 ``color`` に透明な値(たとえば
+``(0,0,0,0)``) を指定するとテキストが見えなくなり、文字の中が空になったアウトラインだけが表示されます(この機能は後述の ``gcolor`` との互換性はありません)。
 
-Valid values for ``ocolor`` are the same as for ``color``.
+``ocolor`` に指定できる色の値は ``color`` と同じです。
 
-Drop shadow
-'''''''''''
+ドロップシャドウ
+'''''''''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), shadow=(1.0,1.0), scolor="blue")
 
-Keyword arguments:
+キーワード引数は以下の通りです。
 
--  ``shadow``: (x,y) values representing the drop shadow offset, in
-   shadow units. Defaults to ``None``.
--  ``scolor``: drop shadow color. Defaults to ``"black"``.
+-  ``shadow``: ドロップシャドウを表示するオフセット座標 (x,y) を指定します。デフォルトは ``None`` です。
+-  ``scolor``: ドロップシャドウの色を指定します。デフォルトは ``"black"`` です。
 
-The text will have a drop shadow if ``shadow`` is specified. It must be
-set to a 2-element sequence representing the x and y offsets of the drop
-shadow, which can be positive, negative, or 0. For example,
-``shadow=(1.0,1.0)`` corresponds to a shadow down and to the right of
-the text. ``shadow=(0,-1.2)`` corresponds to a shadow higher than the
-text.
+``shadow`` を指定すると文字にドロップシャドウが表示されます。引数にはオフセット座標の x と y の値をタプルで指定します。数値は正の値、負の値、0 の何れも使用可能です。たとえば 
+``shadow=(1.0,1.0)`` の場合、テキストの右下に影が付きますが、``shadow=(0,-1.2)`` にすると、影はテキストの上に表示されます。
 
-The units of ``shadow`` are chosen so that ``1.0`` is a good typical
-value for the offset. Specifically, they're the font size divided by 18.
+``shadow`` の値は 1.0 としたときにちょうどよく表示されるようになっています。フォントサイズを 18 で割った値がその単位です。
 
-As a special case, setting ``color`` to a transparent value (e.g.
-``(0,0,0,0)``) while using drop shadow will cause the text to be
-invisible, giving a hollow shadow. (This feature is not compatible with
-``gcolor``.)
+特別なケースとして、ドロップシャドウを使用する際、 ``color`` に透明な値(たとえば
+``(0,0,0,0)``) を指定するとテキストが見えなくなり、影だけが表示されます(この機能は後述の ``gcolor`` との互換性はありません)。
 
-Valid values for ``scolor`` are the same as for ``color``.
+``scolor`` に指定できる色の値は ``color`` と同じです。
 
-Gradient color
-''''''''''''''
+グラデーション
+''''''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), color="black", gcolor="green")
 
-Keyword argument:
+キーワード引数は以下の通りです。
 
--  ``gcolor``: Lower gradient stop color. Defaults to ``None``.
-
-Specify ``gcolor`` to color the text with a vertical color gradient. The
-text's color will be ``color`` at the top and ``gcolor`` at the bottom.
-Positioning of the gradient stops and orientation of the gradient are
-hard coded and cannot be specified.
+-  ``gcolor``: グラデーションを停止するときの色を指定します。デフォルトは ``None`` です。
 
 
-Alpha transparency
-''''''''''''''''''
+テキストに垂直方向のグラデーションを付ける場合は  ``gcolor`` を指定します。テキストの色は上端が ``color`` で下端が ``gcolor`` になります。グラデーションの停止位置と方向はハードコードされているため、変更することはできません。
+
+
+アルファ値を使った透明度指定
+'''''''''''''''''''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), alpha=0.5)
 
-Keyword argument:
+キーワード引数は以下の通りです。
 
--  ``alpha``: alpha transparency value, between 0 and 1. Defaults to
-   ``1.0``.
+-  ``alpha``: 0 から 1 までのアルファ値を使って透明度を指定します。デフォルトは ``1.0`` です。
 
-In order to maximize reuse of cached transparent surfaces, the value of
-``alpha`` is rounded.
+透明表示の際、キャッシュを使い値の再利用を最大化するため、``alpha`` の値は丸められます。
 
-
-Anchored positioning
-''''''''''''''''''''
+アンカーを使った配置
+''''''''''''''''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), anchor=(0.3,0.7))
 
-Keyword argument:
+キーワード引数は以下の通りです。
 
--  ``anchor``: a length-2 sequence of horizontal and vertical anchor
-   fractions. Defaults to ``(0.0, 0.0)``.
+-  ``anchor``: タプルの2つの要素でそれぞれ垂直と水平のアンカーを指定します。デフォルトは ``(0.0, 0.0)`` です。
 
-``anchor`` specifies how the text is anchored to the given position,
-when no positioning keyword arguments are passed. The two values in
-``anchor`` can take arbitrary values between ``0.0`` and ``1.0``. An
-``anchor`` value of ``(0,0)``, the default, means that the given
-position is the top left of the text. A value of ``(1,1)`` means the
-given position is the bottom right of the text.
+位置指定のキーワード引数を指定しない場合、``anchor`` を使ってテキストをどのように配置するか指定できます。``anchor`` の2つの値にはそれぞれ ``0.0`` から ``1.0`` までの任意の値を指定できます。 ``anchor`` の値  ``(0,0)`` はデフォルトで、テキストの左上が座標の位置になります。値を  ``(1,1)`` としたときは、テキストの右下が座標の位置になります。
 
-Rotation
-''''''''
+回転
+''''
 
 ::
 
     screen.draw.text("hello world", (100, 100), angle=10)
 
-Keyword argument:
+キーワード引数は以下の通りです。
 
--  ``angle``: counterclockwise rotation angle in degrees. Defaults to
-   ``0``.
+-  ``angle``: 時計回りの回転角度を指定します。デフォルトは ``0`` です。
 
-Positioning of rotated surfaces is tricky. When drawing rotated text, the
-anchor point, the position you actually specify, remains fixed, and the text
-rotates around it. For instance, if you specify the top left of the text to be
-at ``(100, 100)`` with an angle of ``90``, then the Surface will actually be
-drawn so that its bottom left is at ``(100, 100)``.
+回転させたときの Surface の位置指定は厄介です。回転したテキストを描画するとき、実際に指定した位置はアンカーとして固定され、テキストはその周りを回転することになります。たとえば、テキストの左上の座標を ``(100, 100)`` にして角度を  ``90`` にした場合、実際には Surface の左下を ``(100, 100)`` にして描画されることになります。
 
-If you find that confusing, try specifying the center. If you anchor the
-text at the center, then the center will remain fixed, no matter how you
-rotate it.
+これが分かりにくいようだったら、アンカーがテキストの中心に指定してみてください。アンカーをテキストの中心にすれば、いくら回転させても常にテキストの中心で変わることはありません。
 
-In order to maximize reuse of cached rotated surfaces, the value of
-``angle`` is rounded to the nearest multiple of 3 degrees.
+回転させた Surface の描画の際は、キャッシュを使い値の再利用を最大化するため、``angle`` の値は 3 の倍数に丸められます。
 
 
-Constrained text
-''''''''''''''''
+テキストのサイズ制限
+''''''''''''''''''
 
 ::
 
     screen.draw.textbox("hello world", (100, 100, 200, 50))
 
-``screen.draw.textbox`` requires two arguments: the text to be drawn, and a
-``pygame.Rect`` or a ``Rect``-like object to stay within. The font size
-will be chosen to be as large as possible while staying within the box.
-Other than ``fontsize`` and positional arguments, you can pass all the
-same keyword arguments to ``screen.draw.textbox`` as to ``screen.draw.text``.
+``screen.draw.textbox`` には2つの引数を指定します。ひとつは描画するテキストで、もうひとつは ``pygame.Rect`` オジェクト、あるいは Rect と同じように x 座標、y 座標、幅、高さの値を要素に持つタプルで指定します。フォントのサイズは範囲内に収まる最大のものが自動的に選択されます。  ``fontsize`` と位置指定を除き、 ``screen.draw.textbox`` には  ``screen.draw.text`` と同じキーワード引数が指定できます。
