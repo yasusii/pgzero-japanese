@@ -1,5 +1,5 @@
 IDLE や 他の IDE での Pygame Zero 実行
-====================================
+======================================
 
 .. versionadded:: 1.2
 
@@ -18,7 +18,7 @@ Pygame Zero は ``python`` を使い、普通の Python プログラムとして
     pgzrun.go()
 
 例
-----
+--
 
 これはスクリーンに円を描く Pygame Zero プログラムです。この内容はそのまま IDLE にペーストして実行できます ::
 
@@ -34,4 +34,3 @@ Pygame Zero は ``python`` を使い、普通の Python プログラムとして
 
 
     pgzrun.go()
-

@@ -1,5 +1,5 @@
 ロードマップ
-==========
+============
 
 Pygame Zero はオープンソースのプロジェクトです。他のオープンソース・プロジェクトと同様、開発ロードマップは変更する可能性があります。
 
@@ -16,7 +16,7 @@ Pygame Zero は若いユーザーを対象にしています。しかし、若�
 
 
 ゲームコントローラのサポート
--------------------------
+----------------------------
 
 Github Issue: `#70 <https://github.com/lordmauve/pgzero/issues/70>`_
 
@@ -31,7 +31,7 @@ Github Issue: `#70 <https://github.com/lordmauve/pgzero/issues/70>`_
 
 
 サーフェース・ジャグリング
------------------------
+--------------------------
 
 Github Issue: `#71 <https://github.com/lordmauve/pgzero/issues/71>`_
 
@@ -44,9 +44,9 @@ Pygame のエキスパートたちは、おもしろい効果を生み出すた�
 Pygame Zero の Actor と Screen でうまく機能するカスタム Surface の追加方法を用意する必要があります。
 
 ストレージ
----------
+----------
 
-.. 注意::
+.. caution::
 
     :ref:`ストレージ API <data-storage>` は開発が完了しており Pygame Zero 1.3 から提供される予定となっています。
 
