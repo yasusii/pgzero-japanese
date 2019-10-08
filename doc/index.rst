@@ -6,12 +6,12 @@
 Pygame Zero へようこそ
 ======================
 
-Pygame Zero はお決まりの手続きをあれこれ書かなくても、ゲームを作れるようにしたものです。
+Pygame Zero を使えばお決まりの手続きをいちいち書かなくても、ゲームを作成できます。
 
-教育の場での利用を意図して作られており、先生がPygame API やイベントループの説明をしなくても、基本的なプログラミングを教えられるようになっています。
+教育の場での利用を意図しており、指導者は Pygame の API やイベントループの説明をしなくても、基本的なプログラミングを教えられるようになっています。
 
-授業内容
---------
+学習コース
+----------
 
 .. toctree::
     :maxdepth: 2
@@ -45,16 +45,15 @@ Pygame Zero はお決まりの手続きをあれこれ書かなくても、ゲ�
     changelog
 
 
-Stickers by |Sticker Mule|
---------------------------
+ステッカー by |Sticker Mule|
+----------------------------
 
 .. |Sticker Mule| image:: _static/sticker-mule.svg
     :alt: Sticker Mule
     :height: 40
     :target: https://www.stickermule.com/supports/opensource
 
-`Sticker Mule`_ have graciously offered to provide Pygame Zero laptop stickers
-for learners.
+`Sticker Mule`_ は学習者向けに Pygame Zero のノートパソコン用ステッカーを提供しています。
 
 .. _`Sticker Mule`: https://www.stickermule.com/supports/opensource
 
@@ -64,8 +63,8 @@ for learners.
     stickers
 
 
-Pygame Zero を改善する
-----------------------
+Pygame Zero の改善
+------------------
 
 .. toctree::
     :maxdepth: 2
