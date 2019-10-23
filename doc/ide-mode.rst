@@ -9,7 +9,7 @@ IDLE や 他の IDE での Pygame Zero 実行
 
 しかし IDLE や Edublocks などの IDE 上からは ``python`` だと実行できますが、 ``pgzrun`` は実行できません。
 
-Pygame Zero は ``python`` を使い、普通の Python プログラムとして実行する方法も提供しています。それにはまず、プログラムの冒頭に次の行を追加します ::
+Pygame Zero は ``python`` を使い、普通の Python プログラムとして実行する方法も提供しています。そうするにはまず、プログラムの冒頭に次の行を追加します ::
 
     import pgzrun
 
