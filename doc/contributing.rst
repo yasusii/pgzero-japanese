@@ -17,7 +17,7 @@ Pygame Zero のバグ報告や機能の要望は  `Github issue tracker`_ から
 バグ報告などを行う前に留意すべき事項は以下の通りです。
 
 * ほかの人も同じことをしている可能性があります。既存のイシューを検索して(open か closed)に関わらず)ほかの人が既にイシューを登録していないか確認してください。
-* 開発者はどのバージョンの Pygame Zero を使っているのか、動かしている OS ((Windows, Mac, Linux 等) とそのバージョン(Windows 10, Ubuntu 16.04 等)を知る必要があります。
+* 開発者はどのバージョンの Pygame Zero を使っているのか、動かしている OS (Windows, Mac, Linux 等) とそのバージョン(Windows 10, Ubuntu 16.04 等)を知る必要があります。
 
 .. _`Github issue tracker`: https://github.com/lordmauve/pgzero/issues
 

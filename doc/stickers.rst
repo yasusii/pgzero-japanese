@@ -11,7 +11,7 @@
     :align: center
     :target: https://www.stickermule.com/supports/opensource
 
-ノートパソコンのステッカーは Pygame Zero の宣伝になるだけではなく、生徒たちが Pygame Zero に触れ、学ぶことのモチベーションを上げる最適な方法です。
+ノートパソコンのステッカーは Pygame Zero の宣伝になるだけではなく、生徒たちが Pygame Zero に触れ、学習のモチベーションを上げる最適な方法です。
 
 ステッカーのデザインはこのようになっています(実物とはサイズが違います)。
 

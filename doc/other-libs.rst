@@ -31,7 +31,7 @@ GPIO Zero
 `GPIO Zero`_ は  `Raspberry Pi`_ の General Purpose Input/Output (GPIO) 
 ピンに接続されたデバイスを制御するためのライブラリです。
 
-GPIO Zero 自体が独自のスレッドで動作するため、問題なく Pygame Zero と組み合わせて使うことができます。
+GPIO Zero 自体が独自のスレッドで動作するため、Pygame Zero と一緒に問題なく使うことができます。
 
 .. caution::
 
